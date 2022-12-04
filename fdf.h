@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/04 15:26:55 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/04 18:42:05 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <math.h>
 # include "mlx_linux/mlx.h"
+# include "srcs/get_next_line.h"
 # include <stdio.h>
+# include <fcntl.h>
 
 // Defines the width and height of your window.
 # define WIN_WIDTH 800
@@ -52,5 +54,16 @@ typedef struct s_win
 void	pixel_put(t_data *data, int x, int y, int color);
 int		main(void);
 void	bresenham(int x, int y, int x2, int y2, t_data *img);
+
+// ft_split
+int		ft_cntwrds(char const *s, char c);
+char	*ft_strdupm(char *s, char c);
+char	**ft_split(char const *s, char c);
+
+// ft_parsing
+int		ft_atoi(const char *nptr);
+
+// utils 
+void	free_split(char **split);
 
 #endif

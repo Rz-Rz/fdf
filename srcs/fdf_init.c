@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/04 15:29:26 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/04 18:57:29 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(void)
 	img.addr = mlx_get_data_addr(img.img, &img.bpp,
 			&img.size_line, &img.endian);
 	bresenham(50, 100, 400, 400, &img);
+
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 	return (0);
@@ -31,32 +32,31 @@ int	main(void)
 
 void	pixel_put(t_data *data, int x, int y, int color)
 {
-				char *dst;
+	char	*dst;
 
-				dst = data->addr + (y * data->size_line + x * (data->bpp / 8));
-				*(unsigned int*)dst = color;
+	dst = data->addr + (y * data->size_line + x * (data->bpp / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	bresenham(int x, int y, int x2, int y2, t_data *img)
 {
-		int p;
-		int dx;
-		int dy;
+	int	p;
+	int	dx;
+	int	dy;
 
-		dx = x2 - x;
-		dy = y2 - y;
-		p = 2 * dy - dx;
-		while (x <= x2)
+	dx = x2 - x;
+	dy = y2 - y;
+	p = 2 * dy - dx;
+	while (x <= x2)
+	{
+		pixel_put(img, x, y, 0x00FF0000);
+		x++;
+		if (p < 0)
+			p = p + 2 * dy;
+		else
 		{
-				pixel_put(img, x, y, 0x00FF0000);
-				x++;
-				if (p < 0)
-						p = p + 2 * dy;
-				else
-				{
-						p = p + 2 * dy - 2 * dx;
-						y++;
-				}
+			p = p + 2 * dy - 2 * dx;
+			y++;
 		}
+	}
 }
-
