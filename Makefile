@@ -6,26 +6,49 @@
 #    By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 14:25:53 by kdhrif            #+#    #+#              #
-#    Updated: 2022/11/30 17:25:51 by kdhrif           ###   ########.fr        #
+#    Updated: 2022/12/04 15:20:39 by kdhrif           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME=fdf
-SRC=fdf_init.c
-OBJ=$(SRC:.c=.o)
-CC=gcc
+NAME     = fdf
+SRCS_DIR = srcs
+OBJS_DIR = objs
+SRCS	:=	$(shell find srcs/*.c -exec basename \ {} \;)
+OBJS     = ${patsubst %.c,${OBJS_DIR}/%.o,${SRCS}}
+# OBJ=$(SRC:.c=.o)
+CC       = gcc
+CFLAGS   = -Wall -Wextra -Werror
+LIB      = mlx_linux/libmlx.a mlx_linux/libmlx_Linux.a
+HEADERS  = fdf.h
 
-all: $(NAME)
+all: $(NAME) 
 
-%.o: %.c
-	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+	@echo "\033[33mcompiling ${NAME}..."
+	@echo "SRCS = ${SRCS}"
+	@echo "OBJS = ${OBJS}"
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
+	@${CC} ${CFLAGS} -I/usr/include -Imlx_linux -c $< -o $@
+
+${LIB} : 
+	@make -C mlx_linux
+
+# %.o: %.c
+# 	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+
+${NAME}: $(LIB) $(OBJS_DIR) $(OBJS) ${HEADERS}
+	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux  -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	@echo "\033[32m$ ${NAME} compiled !"
 
 clean:
-	make -C minilibx clean
-	rm -rf $(OBJ) libft.a libmlx.a
+	make -C mlx_linux clean
+	rm -rf $(OBJS_DIR) 
 
 fclean: clean
 	rm -rf $(NAME)
+
+re: fclean all
+
+.PHONY:	all clean fclean re

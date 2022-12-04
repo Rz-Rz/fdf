@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/11/30 20:16:39 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/04 15:26:55 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 	- size_line to store the return value of mlx_get_data_addr
 	- endian to store the return value of mlx_get_data_addr
 */
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*img;
-	char	*addr; // Here we have an int * even if the return value of mlx_get_data_addr is a char *.
+	char	*addr;
 	int		bpp;
 	int		size_line;
 	int		endian;
@@ -41,7 +41,7 @@ typedef struct	s_data
 	- win_ptr to store the return value of mlx_new_window
 	- img to store the return value of mlx_new_image
 */
-typedef struct	s_win
+typedef struct s_win
 {
 	void	*mlx_ptr;
 	void	*win;
@@ -49,6 +49,8 @@ typedef struct	s_win
 }				t_mlx;
 
 // Prototypes
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	pixel_put(t_data *data, int x, int y, int color);
+int		main(void);
+void	bresenham(int x, int y, int x2, int y2, t_data *img);
 
 #endif
