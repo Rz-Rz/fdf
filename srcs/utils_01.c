@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 17:18:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/04 18:54:13 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/08 17:24:04 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,33 @@ char	*ft_realloc(char *str, int size)
 	return (new_str);
 }
 
+
+// Name: ft_putstr
+// Parameters: char *str (the string to print)
+// Return: void
+// Description: this function will print the string
+void	ft_putstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+}
+
+// Name : ft_splitlen
+// Description : return the length of the split
+// Input : char **split
+// Output : int
+int	ft_splitlen(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+		i++;
+	return (i);
+}

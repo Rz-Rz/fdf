@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/04 18:42:05 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/08 18:25:06 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ typedef struct s_data
 	int		endian;
 }				t_data;
 
+
+typedef struct s_point
+{
+	int*		x;
+	int		y;
+	int*		z;
+	int		color;
+	int loop;
+	void *next;
+}				t_point;
+
 /* struct of the MLX window:
 	- mlx_ptr to store the return value of mlx_init
 	- win_ptr to store the return value of mlx_new_window
@@ -52,18 +63,28 @@ typedef struct s_win
 
 // Prototypes
 void	pixel_put(t_data *data, int x, int y, int color);
-int		main(void);
 void	bresenham(int x, int y, int x2, int y2, t_data *img);
+
+// debugging.c
+void	print_map(t_point *map);
 
 // ft_split
 int		ft_cntwrds(char const *s, char c);
 char	*ft_strdupm(char *s, char c);
 char	**ft_split(char const *s, char c);
 
-// ft_parsing
-int		ft_atoi(const char *nptr);
+// parsing_01
+int	**converter(int fd, int **map, char **tmp);
+t_point	*create_point(char *line);
+void	add_point(t_point *map, t_point *point);
+void check_err(int fd, char *line);
+t_point	*parser(char **av);
 
-// utils 
+// utils_01
+void	ft_putstr(char *str);
 void	free_split(char **split);
+int	ft_splitlen(char **split);
+char	*ft_realloc(char *str, int size);
+int		ft_atoi(const char *nptr);
 
 #endif

@@ -6,78 +6,93 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/04 18:57:29 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/08 18:44:34 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-//Name: parser
-// Parameters: char **av (the file name) 
-// Return: int ** (the map) 
-// Description: This function will parse the file and return the map
-int	**parser(char **av)
+// Name: parser
+// Parameters: char **av (the file name)
+// Return: t_point * (the chained list that contains the map)
+// Description: this function will parse the file and create the chained list
+// that contains the map
+t_point	*parser(char **av)
 {
 	int		fd;
-	int		**map;
 	char	*line;
-	char	**tmp;
+	t_point	*map;
+	t_point	*tmp;
 
+	map = NULL;
 	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	converter(fd, map, tmp);
+	line = get_next_line(fd);
+	check_err(fd, line);
+	while (line)
+	{
+					tmp = create_point(line);
+					if (!map)
+									map = tmp;
+					else
+									add_point(map, tmp);
+					free(line);
+					line = get_next_line(fd);
+	}
 	return (map);
 }
 
-//Name : converter
-// Parameters: int fd (the file descriptor) 
-// Return: int ** (the map)
-// Description: This function will convert the map from a string to an int,
-// and return the map
-void	**converter(int fd, int **map, char **tmp)
+// Name : create_point
+// Description : create a point
+// Input : char *line
+// Output : t_point *point
+t_point	*create_point(char *line)
 {
-	char	*line;
-	int		**map_cpy;
+	t_point	*point;
+	char	**split;
 	int		i;
-	int		j;
 
-	i = 0;
-	while (1)
-	{
-		j = 0;
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		tmp = ft_split(line, ' ');
-		while (tmp[0][j])
-		{
-			map_cpy[i][j] = ft_atoi(tmp[j]);
-			j++;
-		}
-		i++;
-		free(line);
-		free_split(tmp);
-	}
-	return (map);
+	split = ft_split(line, ' ');
+	point = (t_point *)malloc(sizeof(t_point));
+	point->loop = (ft_splitlen(split) - 1);
+	point->x = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+	i = -1;
+	while (split[++i])
+					point->x[i] = i;
+	point->y = 0;
+	point->z = (int *)malloc(sizeof(int) * i);
+	point->next = NULL;
+	i = -1;
+	while (split[++i])
+		point->z[i] = ft_atoi(split[i]);
+	free_split(split);
+	return (point);
 }
 
-// Name : cnt_x
-// Parameters: char *line (the line of the map)
-// Return: int (the number of x)
-// Description: This function will count the number of x in the line
-int	cnt_x(char *line)
+// Name : add_point
+// Description : add a point to the chained list
+// Input : t_point *map, t_point *point
+// Output : void
+void	add_point(t_point *map, t_point *point)
 {
-	int	i;
-	int	cnt;
+	t_point	*tmp;
 
-	i = 0;
-	cnt = 0;
-	while (line[i])
+	tmp = map;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = point;
+	point->y = tmp->y + 1;
+}
+
+void check_err(int fd, char *line)
+{
+	if (fd == -1)
 	{
-		if (line[i] == ' ')
-			cnt++;
-		i++;
+		ft_putstr("Error: file not found");
+		exit(0);
 	}
-	return (cnt);
+	if (!line)
+	{
+		ft_putstr("Error: file is empty");
+		exit(0);
+	}
 }
