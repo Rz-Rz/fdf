@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/08 18:44:34 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/10 10:53:21 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@ t_point	*parser(char **av)
 	char	*line;
 	t_point	*map;
 	t_point	*tmp;
+	int y;
 
+	y = -1;
 	map = NULL;
 	fd = open(av[1], O_RDONLY);
 	line = get_next_line(fd);
 	check_err(fd, line);
 	while (line)
 	{
-					tmp = create_point(line);
+					y++;
+					tmp = create_point(line, y);
 					if (!map)
 									map = tmp;
 					else
@@ -45,7 +48,7 @@ t_point	*parser(char **av)
 // Description : create a point
 // Input : char *line
 // Output : t_point *point
-t_point	*create_point(char *line)
+t_point	*create_point(char *line, int y)
 {
 	t_point	*point;
 	char	**split;
@@ -58,12 +61,15 @@ t_point	*create_point(char *line)
 	i = -1;
 	while (split[++i])
 					point->x[i] = i;
-	point->y = 0;
-	point->z = (int *)malloc(sizeof(int) * i);
+	point->y = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+	i = -1;
+	while (split[++i])
+		point->y[i] = y;
+	point->z = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
 	point->next = NULL;
 	i = -1;
 	while (split[++i])
-		point->z[i] = ft_atoi(split[i]);
+		point->z[i] = ft_atoi(split[i]) ;
 	free_split(split);
 	return (point);
 }
@@ -80,7 +86,6 @@ void	add_point(t_point *map, t_point *point)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = point;
-	point->y = tmp->y + 1;
 }
 
 void check_err(int fd, char *line)

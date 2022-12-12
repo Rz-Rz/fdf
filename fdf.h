@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/08 18:25:06 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/10 12:40:06 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <fcntl.h>
 
 // Defines the width and height of your window.
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 1000
 /* struct of the MLX img:
 	- img_ptr to store the return value of mlx_new_image
 	- data to store the return value of mlx_get_data_addr
@@ -42,11 +42,13 @@ typedef struct s_data
 typedef struct s_point
 {
 	int*		x;
-	int		y;
+	int*	 y;
 	int*		z;
 	int		color;
 	int loop;
-	void *next;
+	int*		iso_x;
+	int*		iso_y;
+	struct s_point *next;
 }				t_point;
 
 /* struct of the MLX window:
@@ -63,7 +65,7 @@ typedef struct s_win
 
 // Prototypes
 void	pixel_put(t_data *data, int x, int y, int color);
-void	bresenham(int x, int y, int x2, int y2, t_data *img);
+void	breisenham(int x, int y, int x2, int y2, t_data *img);
 
 // debugging.c
 void	print_map(t_point *map);
@@ -75,7 +77,7 @@ char	**ft_split(char const *s, char c);
 
 // parsing_01
 int	**converter(int fd, int **map, char **tmp);
-t_point	*create_point(char *line);
+t_point	*create_point(char *line, int y);
 void	add_point(t_point *map, t_point *point);
 void check_err(int fd, char *line);
 t_point	*parser(char **av);
@@ -86,5 +88,15 @@ void	free_split(char **split);
 int	ft_splitlen(char **split);
 char	*ft_realloc(char *str, int size);
 int		ft_atoi(const char *nptr);
+
+// line_drawing
+void	convert_iso(t_point *p);
+void	map_to_iso(t_point *map);
+void	draw_line(t_point *map, t_data *img);
+void	center_map(t_point *map);
+
+
+// free_function_01
+void	free_map(t_point *map);
 
 #endif
