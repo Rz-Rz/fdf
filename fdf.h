@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/10 12:40:06 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/14 21:59:38 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,25 @@ typedef struct s_data
 	int		endian;
 }				t_data;
 
-
 typedef struct s_point
 {
-	int*		x;
-	int*	 y;
-	int*		z;
+	int		*x;
+	int		*y;
+	int		*z;
 	int		color;
-	int loop;
-	int*		iso_x;
-	int*		iso_y;
-	struct s_point *next;
+	int		loop;
+	int		*iso_x;
+	int		*iso_y;
+	struct s_point	*next;
 }				t_point;
+
+typedef struct pt
+{
+	int		x;
+	int		y;
+	int		z;
+	int		color;
+}				t_pt;
 
 /* struct of the MLX window:
 	- mlx_ptr to store the return value of mlx_init
@@ -65,7 +72,7 @@ typedef struct s_win
 
 // Prototypes
 void	pixel_put(t_data *data, int x, int y, int color);
-void	breisenham(int x, int y, int x2, int y2, t_data *img);
+/* void	breisenham(int x, int y, int x2, int y2, t_data *img); */
 
 // debugging.c
 void	print_map(t_point *map);

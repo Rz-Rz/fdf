@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/10 15:10:38 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/14 22:11:52 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,28 @@
 // Return : void
 void	draw_line(t_point *map, t_data *img)
 {
-	int	i;
-	int	j;
-	t_point *lower;
-
+	int		i;
+	t_point	*lower;
+	int		j;
 
 	while (map)
 	{
-					lower = map->next;
-					if (!lower)
-						break;
-					i = 0;
-					while (i < map->loop)
-					{
-									j = i + 1;
-									if (j >= map->loop)
-													break;
-									breisenham(map->iso_x[i], map->iso_y[i], map->iso_x[j], map->iso_y[j], img);
-									breisenham(map->iso_x[i], map->iso_y[i], lower->iso_x[i], lower->iso_y[i], img);
-									i++;
-					}
-					map = map->next;
+		lower = map->next;
+		if (!lower)
+			break ;
+		i = 0;
+		while (i < map->loop)
+		{
+			j = i + 1;
+			if (j >= map->loop)
+				break ;
+			breisenham(map->iso_x[i], map->iso_y[i], map->iso_x[j], \
+					map->iso_y[j], img);
+			breisenham(map->iso_x[i], map->iso_y[i], lower->iso_x[i], \
+					lower->iso_y[i], img);
+			i++;
+		}
+		map = map->next;
 	}
 }
 
@@ -81,28 +82,6 @@ void	draw_line(t_point *map, t_data *img)
 /* 	} */
 /* } */
 
-void	breisenham(int x, int y, int x2, int y2, t_data *img)
-{
-				int	p;
-				int	dx;
-				int	dy;
-
-				dx = x2 - x;
-				dy = y2 - y;
-				p = 2 * dy - dx;
-				while (x <= x2)
-				{
-								pixel_put(img, x, y, 0x00FF0000);
-								x++;
-								if (p < 0)
-												p = p + 2 * dy;
-								else
-								{
-												p = p + 2 * dy - 2 * dx;
-												y++;
-								}
-				}
-}
 
 // Name : center_map
 // Description : center the map in the middle of the window
@@ -112,27 +91,22 @@ void	breisenham(int x, int y, int x2, int y2, t_data *img)
 void	center_map(t_point *map)
 {
 	int	i;
-	int scale_factor;
+	int	scale_factor;
 
 	scale_factor = 3;
 	while (map)
 	{
-					i = 0;
-					while (i < map->loop)
-					{
-									map->x[i] =  (map->x[i] * WIN_WIDTH * scale_factor) / 100;
-									map->y[i] =  (map->y[i] * WIN_HEIGHT * scale_factor) / 100;
-									printf("x y : %d %d \n", map->x[i], map->y[i]);
-									i++;
-					}
-					map = map->next;
+		i = 0;
+		while (i < map->loop)
+		{
+			map->x[i] = (map->x[i] * WIN_WIDTH * scale_factor) / 100;
+			map->y[i] = (map->y[i] * WIN_HEIGHT * scale_factor) / 100;
+			printf("x y : %d %d \n", map->x[i], map->y[i]);
+			i++;
+		}
+		map = map->next;
 	}
 }
-
-
-
-
-
 //Name : convert_iso
 //Description : convert a point from cartesian to isometric
 //It has to loop through the x int arrays and z int arrays
@@ -164,8 +138,8 @@ void	center_map(t_point *map)
 /* 	p->iso_y = (int *)malloc(sizeof(int) * (p->loop + 1)); */
 /* 	while (++i < p->loop) */
 /* 	{ */
-/* 					p->iso_x[i] = (p->x[i] - p->y[i]) * cos(0.523599); */
-/* 					p->iso_y[i] = -p->z[i] + (p->x[i] +	p->y[i]) * sin(0.523599); */
+/* 			p->iso_x[i] = (p->x[i] - p->y[i]) * cos(0.523599); */
+/* 			p->iso_y[i] = -p->z[i] + (p->x[i] +	p->y[i]) * sin(0.523599); */
 /* 	} */
 /* } */
 
@@ -178,13 +152,13 @@ void	convert_iso(t_point *p)
 	p->iso_y = (int *)malloc(sizeof(int) * (p->loop + 1));
 	while (++i < p->loop)
 	{
-					p->iso_x[i] = (p->x[i] - p->y[i]) * cos(0.523599);
-					p->iso_y[i] = -p->z[i] + (p->x[i] +	p->y[i]) * sin(0.523599);
-					/* p->iso_x[i] = abs((sqrt(2) / 2) * (p->x[i] - p->y[i])); */
-					/* p->iso_y[i] = abs((sqrt(2/3) * p->z[i]) - (1 / sqrt(6) * (p->x[i] + p->y[i]))); */
-					/* p->iso_x[i] = abs((p->x[i] + cos(0.523598) * p->z[i] - cos(0.523598) * p->y[i])); */
-					/* p->iso_y[i] = abs((-p->y[i] * sin(0.523598) - p->z[i] * sin(0.523598))); */
-					printf("iso_x : %d iso_y : %d \n", p->iso_x[i], p->iso_y[i]);
+		p->iso_x[i] = (p->x[i] - p->y[i]) * cos(0.523599);
+		p->iso_y[i] = -p->z[i] + (p->x[i] +	p->y[i]) * sin(0.523599);
+		/* p->iso_x[i] = abs((sqrt(2) / 2) * (p->x[i] - p->y[i])); */
+		/* p->iso_y[i] = abs((sqrt(2/3) * p->z[i]) - (1 / sqrt(6) * (p->x[i] + p->y[i]))); */
+		/* p->iso_x[i] = abs((p->x[i] + cos(0.523598) * p->z[i] - cos(0.523598) * p->y[i])); */
+		/* p->iso_y[i] = abs((-p->y[i] * sin(0.523598) - p->z[i] * sin(0.523598))); */
+		printf("iso_x : %d iso_y : %d \n", p->iso_x[i], p->iso_y[i]);
 	}
 }
 
