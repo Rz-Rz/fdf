@@ -6,14 +6,14 @@
 #    By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 14:25:53 by kdhrif            #+#    #+#              #
-#    Updated: 2022/12/10 10:52:38 by kdhrif           ###   ########.fr        #
+#    Updated: 2022/12/15 17:32:21 by kdhrif           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME     = fdf
 SRCS_DIR = srcs
 OBJS_DIR = objs
-SRCS	:=	$(shell find srcs/*.c -exec basename \ {} \;)
+SRCS	:= $(shell find srcs/*.c -exec basename \ {} \;)
 OBJS     = ${patsubst %.c,${OBJS_DIR}/%.o,${SRCS}}
 CC       = gcc
 CFLAGS   =

@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/14 22:11:52 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/15 21:33:41 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,32 @@
 // but it will also draw the line in the iso projection
 // Parameters : t_point *line (the chained list that contains the map)
 // Return : void
-void	draw_line(t_point *map, t_data *img)
-{
-	int		i;
-	t_point	*lower;
-	int		j;
+/* void	draw_line(t_point *map, t_data *img) */
+/* { */
+/* 	int		i; */
+/* 	t_point	*lower; */
+/* 	int		j; */
 
-	while (map)
-	{
-		lower = map->next;
-		if (!lower)
-			break ;
-		i = 0;
-		while (i < map->loop)
-		{
-			j = i + 1;
-			if (j >= map->loop)
-				break ;
-			breisenham(map->iso_x[i], map->iso_y[i], map->iso_x[j], \
-					map->iso_y[j], img);
-			breisenham(map->iso_x[i], map->iso_y[i], lower->iso_x[i], \
-					lower->iso_y[i], img);
-			i++;
-		}
-		map = map->next;
-	}
-}
+/* 	while (map) */
+/* 	{ */
+/* 		lower = map->next; */
+/* 		if (!lower) */
+/* 			break ; */
+/* 		i = 0; */
+/* 		while (i < map->loop) */
+/* 		{ */
+/* 			j = i + 1; */
+/* 			if (j >= map->loop) */
+/* 				break ; */
+/* 			breisenham(map->iso_x[i], map->iso_y[i], map->iso_x[j], \ */
+/* 					map->iso_y[j], img); */
+/* 			breisenham(map->iso_x[i], map->iso_y[i], lower->iso_x[i], \ */
+/* 					lower->iso_y[i], img); */
+/* 			i++; */
+/* 		} */
+/* 		map = map->next; */
+/* 	} */
+/* } */
 
 // Name : breisenham
 // Description : draw a line between two points
@@ -81,7 +81,6 @@ void	draw_line(t_point *map, t_data *img)
 /* 		} */
 /* 	} */
 /* } */
-
 
 // Name : center_map
 // Description : center the map in the middle of the window

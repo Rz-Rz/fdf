@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/14 21:59:38 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/16 16:58:02 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void	pixel_put(t_data *data, int x, int y, int color);
 
 // debugging.c
 void	print_map(t_point *map);
+void	which_octant(t_pt *pt1, t_pt *pt2);
+void	which_quarter(t_pt *pt1, t_pt *pt2);
+
 
 // ft_split
 int		ft_cntwrds(char const *s, char c);
@@ -83,25 +86,49 @@ char	*ft_strdupm(char *s, char c);
 char	**ft_split(char const *s, char c);
 
 // parsing_01
-int	**converter(int fd, int **map, char **tmp);
+int		**converter(int fd, int **map, char **tmp);
 t_point	*create_point(char *line, int y);
 void	add_point(t_point *map, t_point *point);
-void check_err(int fd, char *line);
+void	check_err(int fd, char *line);
 t_point	*parser(char **av);
 
 // utils_01
 void	ft_putstr(char *str);
 void	free_split(char **split);
-int	ft_splitlen(char **split);
+int		ft_splitlen(char **split);
 char	*ft_realloc(char *str, int size);
 int		ft_atoi(const char *nptr);
+
+// utils_02
+void	swap_pt(t_pt *pt1, t_pt *pt2);
 
 // line_drawing
 void	convert_iso(t_point *p);
 void	map_to_iso(t_point *map);
 void	draw_line(t_point *map, t_data *img);
 void	center_map(t_point *map);
+void bresenham(int x1, int y1, int x2, int y2, t_data *data);
 
+// octant_2
+int		eighth_octant(t_pt *pt1, t_pt *pt2);
+int		seventh_octant(t_pt *pt1, t_pt *pt2);
+int		sixth_octant(t_pt *pt1, t_pt *pt2);
+
+// octant_1
+int		first_octant(t_pt *pt1, t_pt *pt2);
+int		second_octant(t_pt *pt1, t_pt *pt2);
+int		third_octant(t_pt *pt1, t_pt *pt2);
+int		fourth_octant(t_pt *pt1, t_pt *pt2);
+int		fifth_octant(t_pt *pt1, t_pt *pt2);
+
+// quarter
+int		first_quarter(t_pt *pt1, t_pt *pt2);
+int		second_quarter(t_pt *pt1, t_pt *pt2);
+int		third_quarter(t_pt *pt1, t_pt *pt2);
+int		fourth_quarter(t_pt *pt1, t_pt *pt2);
+
+// breisenham 
+void	draw_fq(t_pt *pt1, t_pt *pt2, t_data *data);
 
 // free_function_01
 void	free_map(t_point *map);
