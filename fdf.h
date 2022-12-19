@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/16 16:58:02 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/19 22:15:39 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	pixel_put(t_data *data, int x, int y, int color);
 void	print_map(t_point *map);
 void	which_octant(t_pt *pt1, t_pt *pt2);
 void	which_quarter(t_pt *pt1, t_pt *pt2);
+void	print_likemap(t_point *map);
 
 
 // ft_split
@@ -101,6 +102,7 @@ int		ft_atoi(const char *nptr);
 
 // utils_02
 void	swap_pt(t_pt *pt1, t_pt *pt2);
+int	ft_abs(int n);
 
 // line_drawing
 void	convert_iso(t_point *p);
@@ -127,8 +129,11 @@ int		second_quarter(t_pt *pt1, t_pt *pt2);
 int		third_quarter(t_pt *pt1, t_pt *pt2);
 int		fourth_quarter(t_pt *pt1, t_pt *pt2);
 
-// breisenham 
-void	draw_fq(t_pt *pt1, t_pt *pt2, t_data *data);
+// breisenham
+void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int direction);
+void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int direction);
+void breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data);
+int		direction(t_pt *pt1, t_pt *pt2);
 
 // free_function_01
 void	free_map(t_point *map);

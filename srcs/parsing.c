@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/10 10:53:21 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/19 22:25:11 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ t_point	*create_point(char *line, int y)
 	i = -1;
 	while (split[++i])
 					point->x[i] = i;
-	point->y = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+	point->z = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
 	i = -1;
 	while (split[++i])
-		point->y[i] = y;
-	point->z = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+		point->z[i] = y;
+	point->y = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
 	point->next = NULL;
 	i = -1;
 	while (split[++i])
-		point->z[i] = ft_atoi(split[i]) ;
+		point->y[i] = ft_atoi(split[i]) ;
 	free_split(split);
 	return (point);
 }

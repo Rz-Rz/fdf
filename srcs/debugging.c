@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:05:55 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/16 16:40:10 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/19 22:18:15 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	print_map(t_point *map)
 		j = 0;
 		while (j < map->loop)
 		{
-			printf("x: %d ", map->x[j]);
-			printf("y: %d ", map->y[j]);
-			printf("z: %d ", map->z[j]);
-			printf(" ");
-			/* printf("x: %d ", map->iso_x[j]); */
-			/* printf("y: %d ", map->iso_y[j]); */
+			/* printf("x: %d ", map->x[j]); */
+			/* printf("y: %d ", map->y[j]); */
+			/* printf("z: %d ", map->z[j]); */
+			/* printf(" "); */
+			printf("x: %d ", map->iso_x[j]);
+			printf("y: %d ", map->iso_y[j]);
 			j++;
 		}
 		printf("\n");
@@ -38,10 +38,31 @@ void	print_map(t_point *map)
 	}
 }
 
+// Name : print_likemap
+// Description : print the map
+// Parameters : t_map *map
+// Return : void
+void	print_likemap(t_point *map)
+{
+	int	j;
+
+	while (map)
+	{
+		j = 0;
+		while (j < map->loop)
+		{
+						printf("%d ", map->y[j]);
+						j++;
+		}
+		printf("\n");
+		map = map->next;
+	}
+}
+
 // Name : which_octant
-// Description : print the octant of the line using the function 
-// in octant.c and octant_2.c 
-// Parameters : t_point *pt1, t_point *pt2 
+// Description : print the octant of the line using the function
+// in octant.c and octant_2.c
+// Parameters : t_point *pt1, t_point *pt2
 // Return : void
 void	which_octant(t_pt *pt1, t_pt *pt2)
 {
@@ -66,7 +87,7 @@ void	which_octant(t_pt *pt1, t_pt *pt2)
 		printf("eigth octant\n");
 }
 
-// Name : which_quarter 
+// Name : which_quarter
 // Description : print the quarter of the line using the function
 // in quarter.c
 // Parameters : t_point *pt1, t_point *pt2

@@ -6,117 +6,137 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/16 18:52:41 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/19 22:28:46 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-// Name : breisenham_switch 
+// Name : breisenham_switch
 // Description : This function will decide which function to use to draw the line
-// depending on the slope of the line. 	 
+// depending on the slope of the line. If dy > dx, we will use the function
+// two_third_octant to draw the line. If dx >= dy, we will use the function
+// one_fourth_octant to draw the line. If the lines are of octant 5, 6, 7 or 8,
+// we will swap the coordinates of the line to draw it.
 // Parameters : t_pt *pt1, t_pt *pt2, t_data *data
 // Return : void
-void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data)
-{
-	int		dx;
-	int		dy;
+void breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data) {
+	int dx;
+	int dy;
+	int dir;
 
 	dx = pt2->x - pt1->x;
 	dy = pt2->y - pt1->y;
-
-	if ()
+	if (ft_abs(dy) > ft_abs(dx)) {
+					if (dy < 0) {
+									swap_pt(pt1, pt2);
+									dir = direction(pt1, pt2);
+									two_third_octant(pt1, pt2, data, dir);
+					} else {
+									dir = direction(pt1, pt2);
+									two_third_octant(pt1, pt2, data, dir);
+					}
+	} else {
+					if (dx < 0 && dy < 0) {
+									swap_pt(pt1, pt2);
+									dir = direction(pt1, pt2);
+									one_fourth_octant(pt1, pt2, data, dir);
+					} else {
+									dir = direction(pt1, pt2);
+									one_fourth_octant(pt1, pt2, data, dir);
+					}
+	}
 }
 
 // Name: one_fourth_octant
-// Description: This function will draw the line for the first and 
+// Description: This function will draw the line for the first and
 // the fourth octant
-// of the cartesian plan. Where DeltaX >= DeltaY, so we increment x as the 
+// of the cartesian plan. Where DeltaX >= DeltaY, so we increment x as the
 // main axis, and y when the error is greater than 0.
 // Parameters: t_pt *pt1, t_pt *pt2, t_data *data
 // Return: void
-void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data)
+void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 {
 	int		dx;
 	int		dy;
 	int		error;
 	int		x;
 	int		y;
+	int cnt;
 
-	dx = pt2->x - pt1->x;
-	dy = pt2->y - pt1->y;
-	error = 0;
-	x = pt1->x;
-	y = pt1->y;
-	while (x <= pt2->x)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x00FFFFFF);
-		error += dy;
-		if (error >= dx)
-		{
-			y++;
-			error -= dx;
-		}
-		x++;
-	}
-}
-
-// Name: fourth_quarter 
-// Description: This function will draw the line in the fourth quarter of the
-// cartesian plan. For the third and fourth octant.
-// Parameters: t_pt *pt1, t_pt *pt2, t_data *data
-// Return: void
-void	draw_sq(t_pt *pt1, t_pt *pt2, t_data *data)
-{
-	int		dx;
-	int		dy;
-	int		d;
-	int		de;
-	int		dne;
-	int		x;
-	int		y;
-
-	dx = pt2->x - pt1->x;
-	dy = pt2->y - pt1->y;
-	d = 2 * dy + dx;
-	de = 2 * dy;
-	dne = 2 * (dy + dx);
+	dx = ft_abs(pt2->x - pt1->x);
+	dy = ft_abs(pt2->y - pt1->y);
+	cnt = dx;
+	printf("direction = %d\n", dir);
+	error = dy * 2 - dx;
 	x = pt1->x;
 	y = pt1->y;
 	pixel_put(data, x, y, pt1->color);
-	if (third_octant(pt1, pt2))
+	while (cnt--)
 	{
-		while (x > pt2->x)
+					// check if you want to advance the Y coordinate
+		if (error >= 0)
 		{
-			if (d <= 0)
-				d += de;
-			else
-			{
-				d += dne;
-				y++;
-			}
-			x--;
-			pixel_put(data, x, y, pt1->color);
-		}
-	}
-	else if (fourth_octant(pt1, pt2))
-	{
-		while (y < pt2->y)
-		{
-			if (d <= 0)
-				d += de;
-			else
-			{
-				d += dne;
-				x--;
-			}
 			y++;
-			pixel_put(data, x, y, pt1->color);
+			error += dy * 2 - dx * 2;
 		}
+		else // if not, add to the error
+			error += dy * 2;
+		x += dir; // -1 or 1
+		pixel_put(data, x, y, pt1->color);
 	}
 }
 
+// Name: two_third_octant
+// Description: This function will draw the line for the second and
+// the third octant
+// of the cartesian plan. Where DeltaX <= DeltaY, so we increment y as the
+// main axis, and x when the error is greater than 0.
+// Parameters: t_pt *pt1, t_pt *pt2, t_data *data
+// Return: void
+void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
+{
+	int		dx;
+	int		dy;
+	int		error;
+	int		x;
+	int		y;
+	int cnt;
 
+	dx = ft_abs(pt2->x - pt1->x);
+	dy = ft_abs(pt2->y - pt1->y);
+	cnt = dy;
+	error = dx * 2 - dy;
+	x = pt1->x;
+	y = pt1->y;
+	pixel_put(data, x, y, pt1->color);
+	while (cnt--)
+	{
+					// check if you want to advance the Y coordinate
+		if (error >= 0)
+		{
+			x += dir;
+			error += dx * 2 - dy * 2;
+		}
+		else // if not, add to the error
+			error += dx * 2;
+		y++;
+		pixel_put(data, x, y, pt1->color);
+	}
+}
 
+// name : direction
+// description : This function will decide which direction to draw the line
+// if dx < 0, we will draw the line from right to left, so direction = -1
+// if dx >= 0, we will draw the line from left to right, so direction = 1
+// Parameters : t_pt *pt1, t_pt *pt2
+// Return : int
+int direction(t_pt *pt1, t_pt *pt2) {
+	int dx;
 
-
+	dx = pt2->x - pt1->x;
+	if (dx < 0)
+		return (-1);
+	else
+		return (1);
+}

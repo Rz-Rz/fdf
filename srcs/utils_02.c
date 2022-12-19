@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 16:56:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/16 16:57:08 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/18 13:51:14 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,15 @@ void	swap_pt(t_pt *pt1, t_pt *pt2)
 	pt1->y = pt2->y;
 	pt2->x = tmp.x;
 	pt2->y = tmp.y;
+}
+
+// Name : abs
+// Description : return the absolute value of a number
+// Parameters : int n
+// Return : int
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
 }
