@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/19 22:37:05 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/20 13:25:48 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,3 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-void	pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->size_line + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
-}

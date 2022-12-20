@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/19 22:37:43 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/20 21:48:42 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,28 @@ void	draw_line(t_point *map, t_data *img)
 
 	pt1 = malloc(sizeof(t_pt));
 	pt2 = malloc(sizeof(t_pt));
-	pt1->color = 0x00FFFFFF;
-	pt2->color = 0x00FFFFFF;
+	pt1->color = 0xFFF000FF;
+	pt2->color = 0xFFF000FF;
 	while (map)
 	{
 		lower = map->next;
-		if (!lower)
-			break ;
 		i = 0;
-		while (i < map->loop)
+		while (i <= map->loop)
 		{
 			j = i + 1;
 			if (j >= map->loop)
 				break ;
 			pt1->x = map->iso_x[i];
 			pt1->y = map->iso_y[i];
-			pt2->x = lower->iso_x[j];
-			pt2->y = lower->iso_y[j];
+			pt2->x = map->iso_x[j];
+			pt2->y = map->iso_y[j];
 			breisenham_switch(pt1, pt2, img);
-			pt2->x = lower->iso_x[i];
-			pt2->y = lower->iso_y[i];
-			breisenham_switch(pt1, pt2, img);
+			if (lower)
+			{
+				pt2->x = lower->iso_x[i];
+				pt2->y = lower->iso_y[i];
+				breisenham_switch(pt1, pt2, img);
+			}
 			i++;
 		}
 		map = map->next;
@@ -128,7 +129,7 @@ void	convert_iso(t_point *p)
 	int size;
 
 	i = -1;
-	size = 30;
+	size = 10;
 	yFocus = 1;
 	xFocus = 1;
 	zFocus = 1;
