@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:05:55 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/19 22:18:15 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/21 13:57:02 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_map(t_point *map)
 	while (map)
 	{
 		j = 0;
-		while (j < map->loop)
+		while (j <= map->loop)
 		{
 			/* printf("x: %d ", map->x[j]); */
 			/* printf("y: %d ", map->y[j]); */
@@ -49,7 +49,7 @@ void	print_likemap(t_point *map)
 	while (map)
 	{
 		j = 0;
-		while (j < map->loop)
+		while (j <= map->loop)
 		{
 						printf("%d ", map->y[j]);
 						j++;

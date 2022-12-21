@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/20 21:48:42 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/21 14:02:09 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,6 @@ void	draw_line(t_point *map, t_data *img)
 	}
 }
 
-// Name : center_map
-// Description : center the map in the middle of the window
-// Use the  WIN_WIDTH and WIN_HEIGHT define
-// Parameters : t_point *map (the chained list that contains the map)
-// Return : void
-void	center_map(t_point *map)
-{
-	int	i;
-	int	scale_factor;
-
-	scale_factor = 3;
-	while (map)
-	{
-		i = 0;
-		while (i < map->loop)
-		{
-			map->x[i] = (map->x[i] * WIN_WIDTH * scale_factor) / 100;
-			map->y[i] = (map->y[i] * WIN_HEIGHT * scale_factor) / 100;
-			printf("x y : %d %d \n", map->x[i], map->y[i]);
-			i++;
-		}
-		map = map->next;
-	}
-}
 //Name : convert_iso
 //Description : convert a point from cartesian to isometric
 //It has to loop through the x int arrays and z int arrays
@@ -129,7 +105,7 @@ void	convert_iso(t_point *p)
 	int size;
 
 	i = -1;
-	size = 10;
+	size = 30;
 	yFocus = 1;
 	xFocus = 1;
 	zFocus = 1;
@@ -139,7 +115,7 @@ void	convert_iso(t_point *p)
 	y0 = ((xFocus + zFocus + 1) * sin(0.463646) - yFocus) * size;
 	p->iso_x = (int *)malloc(sizeof(int) * (p->loop + 1));
 	p->iso_y = (int *)malloc(sizeof(int) * (p->loop + 1));
-	while (++i < p->loop)
+	while (++i <= p->loop)
 	{
 
 					p->iso_x[i] = ((p->x[i] - p->z[i]) * cos(0.46365) * size) - x0 + xCenter;

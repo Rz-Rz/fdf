@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/20 13:25:48 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/21 13:55:45 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int ac, char **av)
 	}
 	map = parser(av);
 	map_to_iso(map);
-	print_map(map);
-	/* print_likemap(map); */
+	/* print_map(map); */
+	print_likemap(map);
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "fdf");
 	img.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);

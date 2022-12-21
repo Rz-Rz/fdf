@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/19 22:28:46 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/21 13:42:43 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	dx = ft_abs(pt2->x - pt1->x);
 	dy = ft_abs(pt2->y - pt1->y);
 	cnt = dx;
-	printf("direction = %d\n", dir);
 	error = dy * 2 - dx;
 	x = pt1->x;
 	y = pt1->y;
