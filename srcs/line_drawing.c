@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/21 14:02:09 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/21 16:12:52 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ void	draw_line(t_point *map, t_data *img)
 		while (i <= map->loop)
 		{
 			j = i + 1;
-			if (j >= map->loop)
-				break ;
 			pt1->x = map->iso_x[i];
 			pt1->y = map->iso_y[i];
-			pt2->x = map->iso_x[j];
-			pt2->y = map->iso_y[j];
-			breisenham_switch(pt1, pt2, img);
+			if (j <= map->loop)
+			{
+				pt2->x = map->iso_x[j];
+				pt2->y = map->iso_y[j];
+				breisenham_switch(pt1, pt2, img);
+			}
 			if (lower)
 			{
 				pt2->x = lower->iso_x[i];
