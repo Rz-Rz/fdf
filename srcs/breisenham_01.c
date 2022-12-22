@@ -6,45 +6,56 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/21 13:42:43 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/22 15:04:05 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 // Name : breisenham_switch
-// Description : This function will decide which function to use to draw the line
+// Description : This function will decide which function to
+// use to draw the line
 // depending on the slope of the line. If dy > dx, we will use the function
 // two_third_octant to draw the line. If dx >= dy, we will use the function
 // one_fourth_octant to draw the line. If the lines are of octant 5, 6, 7 or 8,
 // we will swap the coordinates of the line to draw it.
 // Parameters : t_pt *pt1, t_pt *pt2, t_data *data
 // Return : void
-void breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data) {
-	int dx;
-	int dy;
-	int dir;
+void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data)
+{
+	int	dx;
+	int	dy;
+	int	dir;
 
 	dx = pt2->x - pt1->x;
 	dy = pt2->y - pt1->y;
-	if (ft_abs(dy) > ft_abs(dx)) {
-					if (dy < 0) {
-									swap_pt(pt1, pt2);
-									dir = direction(pt1, pt2);
-									two_third_octant(pt1, pt2, data, dir);
-					} else {
-									dir = direction(pt1, pt2);
-									two_third_octant(pt1, pt2, data, dir);
-					}
-	} else {
-					if (dx < 0 && dy < 0) {
-									swap_pt(pt1, pt2);
-									dir = direction(pt1, pt2);
-									one_fourth_octant(pt1, pt2, data, dir);
-					} else {
-									dir = direction(pt1, pt2);
-									one_fourth_octant(pt1, pt2, data, dir);
-					}
+	if (ft_abs(dy) > ft_abs(dx))
+	{
+		if (dy < 0)
+		{
+			swap_pt(pt1, pt2);
+			dir = direction(pt1, pt2);
+			two_third_octant(pt1, pt2, data, dir);
+		}
+		else
+		{
+			dir = direction(pt1, pt2);
+			two_third_octant(pt1, pt2, data, dir);
+		}
+	}
+	else
+	{
+		if (dx < 0 && dy < 0)
+		{
+			swap_pt(pt1, pt2);
+			dir = direction(pt1, pt2);
+			one_fourth_octant(pt1, pt2, data, dir);
+		}
+		else
+		{
+			dir = direction(pt1, pt2);
+			one_fourth_octant(pt1, pt2, data, dir);
+		}
 	}
 }
 

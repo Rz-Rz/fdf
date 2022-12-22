@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/22 13:14:21 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/22 15:13:02 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	which_quarter(t_pt *pt1, t_pt *pt2);
 void	print_likemap(t_point *map);
 
 // hooks.c
-int	key_hook(int keycode, t_mlx *vars);
+int		key_hook(int keycode, t_mlx *vars);
 
 // ft_split
 int		ft_cntwrds(char const *s, char c);
@@ -131,14 +131,14 @@ int		ft_atoi(const char *nptr);
 
 // utils_02
 void	swap_pt(t_pt *pt1, t_pt *pt2);
-int	ft_abs(int n);
+int		ft_abs(int n);
 
 // line_drawing
 void	convert_iso(t_point *p);
 void	map_to_iso(t_point *map);
 void	draw_line(t_point *map, t_data *img);
 void	center_map(t_point *map);
-void bresenham(int x1, int y1, int x2, int y2, t_data *data);
+void	bresenham(int x1, int y1, int x2, int y2, t_data *data);
 
 // octant_2
 int		eighth_octant(t_pt *pt1, t_pt *pt2);
@@ -158,11 +158,14 @@ int		second_quarter(t_pt *pt1, t_pt *pt2);
 int		third_quarter(t_pt *pt1, t_pt *pt2);
 int		fourth_quarter(t_pt *pt1, t_pt *pt2);
 
-// breisenham
+// breisenham_01
 void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int direction);
 void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int direction);
-void breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data);
+void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data);
 int		direction(t_pt *pt1, t_pt *pt2);
+
+// breisenham_02
+void	brei_sw_norm(t_pt *pt1, t_pt *pt2, t_data *data, int dir);
 
 // free_function_01
 void	free_map(t_point *map);
