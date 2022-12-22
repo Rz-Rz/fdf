@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/19 22:15:39 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/22 13:14:21 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,33 @@
 // Defines the width and height of your window.
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 1000
+
+// mlx keycode 
+# define KEYPRESS 2
+# define KEYRELEASE 3
+# define BUTTONPRESS 4
+# define BUTTONRELEASE 5
+# define MOTIONNOTIFY 6
+# define ENTERNOTIFY 7
+# define LEAVENOTIFY 8
+# define FOCUSIN 9
+# define FOCUSOUT 10
+# define KEYMAPNOTIFY 11
+# define EXPOSE 12
+# define GRAPHICSEXPOSE 13
+# define NOEXPOSE 14
+# define VISIBILITYNOTIFY 15
+# define CREATENOTIFY 16
+# define DESTROYNOTIFY 17
+# define UNMAPNOTIFY 18
+# define MAPNOTIFY 19
+# define MAPREQUEST 20
+# define REPARENTNOTIFY 21
+# define CONFIGURENOTIFY 22
+# define CONFIGUREREQUEST 23
+# define GRAVITYNOTIFY 24
+
+
 /* struct of the MLX img:
 	- img_ptr to store the return value of mlx_new_image
 	- data to store the return value of mlx_get_data_addr
@@ -67,7 +94,7 @@ typedef struct s_win
 {
 	void	*mlx_ptr;
 	void	*win;
-	t_data	img;
+	t_point *map;
 }				t_mlx;
 
 // Prototypes
@@ -80,6 +107,8 @@ void	which_octant(t_pt *pt1, t_pt *pt2);
 void	which_quarter(t_pt *pt1, t_pt *pt2);
 void	print_likemap(t_point *map);
 
+// hooks.c
+int	key_hook(int keycode, t_mlx *vars);
 
 // ft_split
 int		ft_cntwrds(char const *s, char c);
@@ -137,5 +166,6 @@ int		direction(t_pt *pt1, t_pt *pt2);
 
 // free_function_01
 void	free_map(t_point *map);
+int		fdf_exit(t_mlx *mlx);
 
 #endif

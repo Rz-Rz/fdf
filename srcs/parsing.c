@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/21 13:52:15 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/22 13:27:26 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ t_point	*parser(char **av)
 	{
 					y++;
 					tmp = create_point(line, y);
+					if (tmp == NULL)
+					{
+						free_map(map);
+						return (NULL);
+					}
 					if (!map)
 									map = tmp;
 					else
@@ -56,16 +61,35 @@ t_point	*create_point(char *line, int y)
 
 	split = ft_split(line, ' ');
 	point = (t_point *)malloc(sizeof(t_point));
+	if (!point)
+		return (NULL);
 	point->loop = (ft_splitlen(split) - 1);
 	point->x = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+	if (!point->x)
+		return (NULL);
 	i = -1;
 	while (split[++i])
 					point->x[i] = i;
 	point->z = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+	if (!point->z)
+		return (NULL);
 	i = -1;
 	while (split[++i])
 		point->z[i] = y;
+	if (ft_splitlen(split) > 1)
+	{
+		point->y = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+		if (!point->y)
+			return (NULL);
+		i = -1;
+		while (split[++i])
+			point->y[i] = ft_atoi(split[i]);
+	}
+	else
+		point->y = NULL;
 	point->y = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+	if (!point->y)
+		return (NULL);
 	point->next = NULL;
 	i = -1;
 	while (split[++i])

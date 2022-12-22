@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/21 13:55:45 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/22 13:27:26 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 int	main(int ac, char **av)
 {
-	void	*mlx;
-	void	*mlx_win;
+	t_mlx	mlx;
 	t_data	img;
 	t_point	*map;
+
 	if (ac != 2)
 	{
 		ft_putstr("usage: ./fdf <filename>");
 		return (0);
 	}
+	mlx.map = map;
 	map = parser(av);
 	map_to_iso(map);
 	/* print_map(map); */
-	print_likemap(map);
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "fdf");
-	img.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
+	/* print_likemap(map); */
+	mlx.mlx_ptr = mlx_init();
+	mlx.win = mlx_new_window(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "fdf");
+	img.img = mlx_new_image(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp,
 			&img.size_line, &img.endian);
 	draw_line(map, &img);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-	free_map(map);
+	mlx_put_image_to_window(mlx.mlx_ptr, mlx.win, img.img, 0, 0);
+	mlx_hook(mlx.win, DESTROYNOTIFY, 0, fdf_exit, &mlx);
+	mlx_key_hook(mlx.win, key_hook, &mlx);
+	mlx_loop(mlx.mlx_ptr);
 	return (0);
 }
-
