@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:08:16 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 18:12:48 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 18:44:32 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	fdf_exit(t_mlx *mlx)
 		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
 	if (mlx->mlx_ptr && mlx->img->img)
 		mlx_destroy_image(mlx->mlx_ptr, mlx->img->img);
+	if (mlx->mlx_ptr)
+		mlx_destroy_display(mlx->mlx_ptr);
+	free(mlx->mlx_ptr);
 	exit(0);
 	return (0);
 }

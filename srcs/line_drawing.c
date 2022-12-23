@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 18:17:38 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 18:43:33 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	draw_line(t_point *map, t_data *img)
 		}
 		map = map->next;
 	}
+	free(pt1);
+	free(pt2);
 }
 
 //Name : convert_iso
