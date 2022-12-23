@@ -6,83 +6,81 @@
 /*   By: kdhrif <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 14:36:25 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/09/22 14:36:27 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 17:11:30 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	found_newline(t_list *stash)
+void	ft_remove_line(char *buf)
 {
-	int		i;
-	t_list	*current;
+	int	i;
+	int	j;
 
-	if (!stash)
-		return (0);
-	current = lstlast(stash);
 	i = 0;
-	while (current->content[i])
+	j = 0;
+	while (buf[i] && buf[i] != '\n')
+		i++;
+	if (buf[i] == '\n')
+		i++;
+	while (buf[i] != '\0')
+		buf[j++] = buf[i++];
+	buf[j++] = buf[i++];
+}
+
+int	already_contain_next_line(char *buf)
+{
+	int	i;
+
+	i = 0;
+	while (buf[i])
 	{
-		if (current->content[i] == '\n')
+		if (buf[i] == '\n')
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-void	generate_line(char **line, t_list *stash)
-{
-	int	i;
-	int	len;
-
-	len = 0;
-	while (stash)
-	{
-		i = 0;
-		while (stash->content[i])
-		{
-			len++;
-			if (stash->content[i] == '\n')
-				break ;
-			i++;
-		}
-		stash = stash->next;
-	}
-	*line = malloc(sizeof(char) * (len + 1));
-}
-
-void	free_stash(t_list *stash)
-{
-	t_list	*current;
-	t_list	*next;
-
-	current = stash;
-	while (current)
-	{
-		free(current->content);
-		next = current->next;
-		free(current);
-		current = next;
-	}
-}
-
-t_list	*lstlast(t_list *lst)
-{
-	while (lst)
-	{
-		if (!lst->next)
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
-}
-
-int	ft_strlen(char *c)
+int	ft_no_return(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (c[i])
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (0);
 		i++;
-	return (i);
+	}
+	return (1);
+}
+
+char	*ft_strgrab(char *str, char *buf)
+{
+	char	*new_str;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	k = -1;
+	while (buf[i] && buf[i] != '\n')
+		i++;
+	if (buf[i] == '\n')
+		i++;
+	while (str[j])
+		j++;
+	new_str = malloc(sizeof(char) * (i + j + 1));
+	if (!new_str)
+		return (0);
+	while (str[++k])
+		new_str[k] = str[k];
+	k = -1;
+	while (++k < i)
+		new_str[j + k] = buf[k];
+	new_str[j + k] = '\0';
+	free(str);
+	return (new_str);
 }

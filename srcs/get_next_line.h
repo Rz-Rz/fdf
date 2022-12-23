@@ -6,7 +6,7 @@
 /*   By: kdhrif <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 14:36:03 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/09/22 14:36:06 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 17:12:52 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,18 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 15
 # endif
 
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include <sys/types.h>
-# include <sys/uio.h>
 # include <unistd.h>
 
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}					t_list;
-
-//prototypes
-char				*get_next_line(int fd);
-
-void				read_and_stash(t_list **stash, int *read_ptr, int fd);
-
-void				add_to_stash(t_list **stash, char *buff, int read);
-
-void				extract_line(t_list *stash, char **line);
-
-void				clean_stash(t_list **stash);
-
-t_list				*lstlast(t_list *lst);
-
-void				generate_line(char **line, t_list *stash);
-
-void				free_stash(t_list *stash);
-
-int					found_newline(t_list *stash);
-
-int					ft_strlen(char *c);
-
+char	*get_next_line(int fd);
+char	*ft_strgrab(char *str, char *buf);
+char	*get_str(char *buf, char *str, int fd);
+void	ft_remove_line(char *buf);
+int		already_contain_next_line(char *buf);
+int		ft_no_return(char *str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/22 15:13:02 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 18:04:07 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <fcntl.h>
 
 // Defines the width and height of your window.
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 1000
+# define WIN_WIDTH 2000
+# define WIN_HEIGHT 1500
 
 // mlx keycode 
 # define KEYPRESS 2
@@ -74,7 +74,7 @@ typedef struct s_point
 	int		loop;
 	int		*iso_x;
 	int		*iso_y;
-	struct s_point	*next;
+	struct	s_point	*next;
 }				t_point;
 
 typedef struct pt
@@ -95,6 +95,7 @@ typedef struct s_win
 	void	*mlx_ptr;
 	void	*win;
 	t_point *map;
+	t_data	*img;
 }				t_mlx;
 
 // Prototypes
@@ -119,8 +120,11 @@ char	**ft_split(char const *s, char c);
 int		**converter(int fd, int **map, char **tmp);
 t_point	*create_point(char *line, int y);
 void	add_point(t_point *map, t_point *point);
-void	check_err(int fd, char *line);
+void	check_err(char *line, t_point *map, int fd);
 t_point	*parser(char **av);
+
+// parsing_02
+void	check_fd(int fd, char *line, t_point *map);
 
 // utils_01
 void	ft_putstr(char *str);
@@ -132,13 +136,15 @@ int		ft_atoi(const char *nptr);
 // utils_02
 void	swap_pt(t_pt *pt1, t_pt *pt2);
 int		ft_abs(int n);
+int		ft_isdigit(int c);
+int		ft_isalphanumeric(int c);
+int		ft_isalpha(int c);
 
 // line_drawing
 void	convert_iso(t_point *p);
 void	map_to_iso(t_point *map);
 void	draw_line(t_point *map, t_data *img);
 void	center_map(t_point *map);
-void	bresenham(int x1, int y1, int x2, int y2, t_data *data);
 
 // octant_2
 int		eighth_octant(t_pt *pt1, t_pt *pt2);
@@ -170,5 +176,14 @@ void	brei_sw_norm(t_pt *pt1, t_pt *pt2, t_data *data, int dir);
 // free_function_01
 void	free_map(t_point *map);
 int		fdf_exit(t_mlx *mlx);
+
+// lineclip 
+int		region_code(t_pt *pt);
+void	lineclip(t_pt *pt1, t_pt *pt2, t_data *data);
+
+// error
+int		line_check(char *line);
+int		ft_count_numbers(char *line);
+void	fdf_error(t_point *map, char *line, int fd);
 
 #endif

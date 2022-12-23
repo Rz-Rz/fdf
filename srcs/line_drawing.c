@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/21 16:12:52 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 18:17:38 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	draw_line(t_point *map, t_data *img)
 			{
 				pt2->x = map->iso_x[j];
 				pt2->y = map->iso_y[j];
-				breisenham_switch(pt1, pt2, img);
+				lineclip(pt1, pt2, img);
 			}
 			if (lower)
 			{
 				pt2->x = lower->iso_x[i];
 				pt2->y = lower->iso_y[i];
-				breisenham_switch(pt1, pt2, img);
+				lineclip(pt1, pt2, img);
 			}
 			i++;
 		}

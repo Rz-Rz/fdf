@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:08:16 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/22 13:14:05 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 18:12:48 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,16 @@ void	free_map(t_point *map)
 	{
 		tmp = map;
 		map = map->next;
-		free(tmp->x);
-		free(tmp->y);
-		free(tmp->z);
+		if (tmp->x)
+			free(tmp->x);
+		if (tmp->y)
+			free(tmp->y);
+		if (tmp->z)
+			free(tmp->z);
+		if (tmp->iso_x)
+			free(tmp->iso_x);
+		if (tmp->iso_y)
+			free(tmp->iso_y);
 		free(tmp);
 	}
 }
@@ -38,6 +45,10 @@ void	free_map(t_point *map)
 int	fdf_exit(t_mlx *mlx)
 {
 	free_map(mlx->map);
+	if (mlx->mlx_ptr && mlx->win)
+		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
+	if (mlx->mlx_ptr && mlx->img->img)
+		mlx_destroy_image(mlx->mlx_ptr, mlx->img->img);
 	exit(0);
 	return (0);
 }

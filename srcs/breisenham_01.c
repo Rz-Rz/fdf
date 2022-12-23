@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   breisenham.c                                       :+:      :+:    :+:   */
+/*   breisenham_01.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/22 15:04:05 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 12:23:08 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,7 @@ void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data)
 	dx = pt2->x - pt1->x;
 	dy = pt2->y - pt1->y;
 	if (ft_abs(dy) > ft_abs(dx))
-	{
-		if (dy < 0)
-		{
-			swap_pt(pt1, pt2);
-			dir = direction(pt1, pt2);
-			two_third_octant(pt1, pt2, data, dir);
-		}
-		else
-		{
-			dir = direction(pt1, pt2);
-			two_third_octant(pt1, pt2, data, dir);
-		}
-	}
+		brei_sw_norm(pt1, pt2, data, dir);
 	else
 	{
 		if (dx < 0 && dy < 0)

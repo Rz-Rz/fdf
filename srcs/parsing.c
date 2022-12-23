@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/22 13:27:26 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 17:41:44 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,42 @@ t_point	*parser(char **av)
 	char	*line;
 	t_point	*map;
 	t_point	*tmp;
-	int y;
+	int		fl_num;
+	int 	y;
 
 	y = -1;
 	map = NULL;
 	fd = open(av[1], O_RDONLY);
+	check_fd(fd, line, map);
 	line = get_next_line(fd);
-	check_err(fd, line);
+	fl_num = ft_count_numbers(line);
 	while (line)
 	{
-					y++;
-					tmp = create_point(line, y);
-					if (tmp == NULL)
-					{
-						free_map(map);
-						return (NULL);
-					}
-					if (!map)
-									map = tmp;
-					else
-									add_point(map, tmp);
-					free(line);
-					line = get_next_line(fd);
+		check_err(line, map, fd);
+		y++;
+		tmp = create_point(line, y);
+		if (tmp == NULL)
+		{
+			free_map(map);
+			return (NULL);
+		}
+		if (!map)
+			map = tmp;
+		else
+			add_point(map, tmp);
+		if (fl_num != ft_count_numbers(line))
+		{
+			ft_putstr("Error: Invalid map\n");
+			fdf_error(map, line, fd);
+		}
+		free(line);
+		line = get_next_line(fd);
+	}
+	fd = close(fd);
+	if (fd)
+	{
+		free_map(map);
+		return (NULL);
 	}
 	return (map);
 }
@@ -60,6 +74,8 @@ t_point	*create_point(char *line, int y)
 	int		i;
 
 	split = ft_split(line, ' ');
+	if (!split)
+		return (NULL);
 	point = (t_point *)malloc(sizeof(t_point));
 	if (!point)
 		return (NULL);
@@ -76,24 +92,13 @@ t_point	*create_point(char *line, int y)
 	i = -1;
 	while (split[++i])
 		point->z[i] = y;
-	if (ft_splitlen(split) > 1)
-	{
-		point->y = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
-		if (!point->y)
-			return (NULL);
-		i = -1;
-		while (split[++i])
-			point->y[i] = ft_atoi(split[i]);
-	}
-	else
-		point->y = NULL;
 	point->y = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
 	if (!point->y)
 		return (NULL);
-	point->next = NULL;
 	i = -1;
 	while (split[++i])
-		point->y[i] = ft_atoi(split[i]) ;
+		point->y[i] = ft_atoi(split[i]);
+	point->next = NULL;
 	free_split(split);
 	return (point);
 }
@@ -112,16 +117,89 @@ void	add_point(t_point *map, t_point *point)
 	tmp->next = point;
 }
 
-void check_err(int fd, char *line)
+void check_err(char *line, t_point *map, int fd)
 {
-	if (fd == -1)
-	{
-		ft_putstr("Error: file not found");
-		exit(0);
-	}
+	int error;
+	int loop;
+
+	error = 0;
 	if (!line)
 	{
-		ft_putstr("Error: file is empty");
+		ft_putstr("Error: file is empty\n");
+		fdf_error(map, line, fd);
+	}
+	error = line_check(line);
+	if (error)
+	{
+		printf("Error: line %d is not valid\n", error);
+		ft_putstr("Error: invalid character\n");
+		fdf_error(map, line, fd);
 		exit(0);
 	}
+}
+
+// Name : check_fd
+// Description : check if the file descriptor is valid
+// Input : int fd
+// Output : void
+void	check_fd(int fd, char *line, t_point *map)
+{
+	if (fd < 0)
+	{
+		ft_putstr("Error: file not found\n");
+		fdf_error(map, line, fd);
+	}
+}
+
+// Name: line_check
+// Description: check if the line is valid:
+// to be valid it must no be empty
+// it must have the same number of numbers as the first line
+// it must contain only numbers, letters, commas and space
+// Input: char *line
+// Output: int (0 if valid, 1 if not)
+int	line_check(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == ' ')
+			i++;
+		else if (line[i] == '-' && ft_isdigit(line[i + 1]))
+			i++;
+		else if (ft_isalphanumeric(line[i]))
+			i++;
+		else if (line[i] == ',')
+			i++;
+		else if (line[i] == '\n' && line[i + 1] == '\0')
+			return (0);
+		else
+			return (1);
+	}
+	return (0);
+}
+
+// Name: ft_count_numbers
+// Description: count the number of numbers in a string
+// Input: char *line
+// Output: int (the number of numbers)
+int	ft_count_numbers(char *line)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		while (line[i] == ' ')
+			i++;
+		if (line[i] != ' ' && line[i] != '\0')
+			count++;
+		while (line[i] != ' ' && line[i] != '\0')
+			i++;
+	}
+	return (count);
 }
