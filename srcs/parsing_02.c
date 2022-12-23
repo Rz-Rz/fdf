@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 14:34:53 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 17:20:10 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 19:37:28 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,4 @@ void fdf_error(t_point *map, char *line, int fd)
 	if (line)
 		free(line);
 	close(fd);
-	exit(0);
 }

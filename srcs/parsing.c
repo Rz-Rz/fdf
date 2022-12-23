@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 17:41:44 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/23 19:26:45 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ t_point	*create_point(char *line, int y)
 	i = -1;
 	while (split[++i])
 		point->y[i] = ft_atoi(split[i]);
+
+	i = -1;
 	point->next = NULL;
 	free_split(split);
 	return (point);
@@ -203,3 +205,10 @@ int	ft_count_numbers(char *line)
 	}
 	return (count);
 }
+
+// Name: parse_hex
+// Description: parse a hex color
+// Input: char *hex
+// Output: int (the color)
+
+
