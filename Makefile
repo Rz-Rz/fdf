@@ -6,7 +6,7 @@
 #    By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 14:25:53 by kdhrif            #+#    #+#              #
-#    Updated: 2022/12/23 15:52:40 by kdhrif           ###   ########.fr        #
+#    Updated: 2022/12/24 21:17:11 by kdhrif           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,5 +46,8 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) test_maps/42.fdf
 
 .PHONY:	all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 18:04:07 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/24 22:07:10 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_point
 	int		*x;
 	int		*y;
 	int		*z;
-	int		color;
+	int		*color;
 	int		loop;
 	int		*iso_x;
 	int		*iso_y;
@@ -102,6 +102,14 @@ typedef struct s_win
 void	pixel_put(t_data *data, int x, int y, int color);
 /* void	breisenham(int x, int y, int x2, int y2, t_data *img); */
 
+// maths.c
+int		get_dy(t_pt start, t_pt end);
+int		get_dx(t_pt start, t_pt end);
+int		get_slope(t_pt start, t_pt end);
+
+// color.c
+int get_color(t_pt current, t_pt start, t_pt end);
+
 // debugging.c
 void	print_map(t_point *map);
 void	which_octant(t_pt *pt1, t_pt *pt2);
@@ -125,6 +133,7 @@ t_point	*parser(char **av);
 
 // parsing_02
 void	check_fd(int fd, char *line, t_point *map);
+void	init_struct(t_point *point);
 
 // utils_01
 void	ft_putstr(char *str);
@@ -139,6 +148,10 @@ int		ft_abs(int n);
 int		ft_isdigit(int c);
 int		ft_isalphanumeric(int c);
 int		ft_isalpha(int c);
+
+// utils_03 
+int		ft_strlen(char *str);
+int		ft_atoibase(char *str, char *base);
 
 // line_drawing
 void	convert_iso(t_point *p);
@@ -174,7 +187,7 @@ int		direction(t_pt *pt1, t_pt *pt2);
 void	brei_sw_norm(t_pt *pt1, t_pt *pt2, t_data *data, int dir);
 
 // free_function_01
-void	free_map(t_point *map);
+void	free_map(t_point *map, int stage);
 int		fdf_exit(t_mlx *mlx);
 
 // lineclip 
@@ -184,6 +197,6 @@ void	lineclip(t_pt *pt1, t_pt *pt2, t_data *data);
 // error
 int		line_check(char *line);
 int		ft_count_numbers(char *line);
-void	fdf_error(t_point *map, char *line, int fd);
+void	fdf_error(t_point *map, char *line, int fd, int stage);
 
 #endif

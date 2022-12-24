@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:08:16 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 18:44:32 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/24 21:15:55 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // Parameters: t_point *map (the chained list that contains the map)
 // Description: this function will free the chained list that contains the map
 // Return: void
-void	free_map(t_point *map)
+void	free_map(t_point *map, int stage)
 {
 	t_point	*tmp;
 
@@ -30,11 +30,17 @@ void	free_map(t_point *map)
 			free(tmp->y);
 		if (tmp->z)
 			free(tmp->z);
-		if (tmp->iso_x)
-			free(tmp->iso_x);
-		if (tmp->iso_y)
-			free(tmp->iso_y);
-		free(tmp);
+		if (tmp->color)
+			free(tmp->color);
+		if (stage != 1)
+		{
+			if (tmp->iso_x)
+				free(tmp->iso_x);
+			if (tmp->iso_y)
+				free(tmp->iso_y);
+		}
+		if (tmp)
+			free(tmp);
 	}
 }
 
@@ -44,14 +50,15 @@ void	free_map(t_point *map)
 // Return : void
 int	fdf_exit(t_mlx *mlx)
 {
-	free_map(mlx->map);
+	free_map(mlx->map, 2);
 	if (mlx->mlx_ptr && mlx->win)
 		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
 	if (mlx->mlx_ptr && mlx->img->img)
 		mlx_destroy_image(mlx->mlx_ptr, mlx->img->img);
 	if (mlx->mlx_ptr)
 		mlx_destroy_display(mlx->mlx_ptr);
-	free(mlx->mlx_ptr);
+	if (mlx->mlx_ptr)
+		free(mlx->mlx_ptr);
 	exit(0);
 	return (0);
 }

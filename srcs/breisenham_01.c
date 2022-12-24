@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 12:23:08 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/24 22:07:41 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	int		dx;
 	int		dy;
 	int		error;
+	t_pt	pt;
 	int		x;
 	int		y;
 	int cnt;
@@ -67,21 +68,23 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	dy = ft_abs(pt2->y - pt1->y);
 	cnt = dx;
 	error = dy * 2 - dx;
-	x = pt1->x;
-	y = pt1->y;
-	pixel_put(data, x, y, pt1->color);
+	pt.x = pt1->x;
+	pt.y = pt1->y;
+	pt.color = pt1->color;
+	get_color(pt, pt1, pt2);
+	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{
 					// check if you want to advance the Y coordinate
 		if (error >= 0)
 		{
-			y++;
+			pt->y++;
 			error += dy * 2 - dx * 2;
 		}
 		else // if not, add to the error
 			error += dy * 2;
-		x += dir; // -1 or 1
-		pixel_put(data, x, y, pt1->color);
+		pt->x += dir; // -1 or 1
+		pixel_put(data, pt->x, pt->y, pt->color);
 	}
 }
 

@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_02.c                                       :+:      :+:    :+:   */
+/*   maths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/23 14:34:53 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/24 14:35:49 by kdhrif           ###   ########.fr       */
+/*   Created: 2022/12/24 21:47:12 by kdhrif            #+#    #+#             */
+/*   Updated: 2022/12/24 21:48:44 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-// Name : fdf_error
-// Description : print error message and exit the program
-// and free the map and the line if needed. 
-// Parameters : t_data *map : the map to free
-// char *line : the line to free
-// Return value : void
-void fdf_error(t_point *map, char *line, int fd, int stage)
+int get_dx(t_pt start, t_pt end)
 {
-	if (map)
-		free_map(map, stage);
-	if (line)
-		free(line);
-	if (fd != -1)
-		close(fd);
-	exit(0);
+	return (abs(end.x - start.x));
 }
+
+int get_dy(t_pt start, t_pt end)
+{
+	return (abs(end.y - start.y));
+}
+
+int get_slope(t_pt start, t_pt end)
+{
+	return ((end.y - start.y) / (end.x - start.x));
+}
+
+

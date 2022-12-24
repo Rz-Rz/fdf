@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 19:26:45 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/24 21:15:34 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_point	*parser(char **av)
 
 	y = -1;
 	map = NULL;
+	line = NULL;
 	fd = open(av[1], O_RDONLY);
 	check_fd(fd, line, map);
 	line = get_next_line(fd);
@@ -39,7 +40,7 @@ t_point	*parser(char **av)
 		tmp = create_point(line, y);
 		if (tmp == NULL)
 		{
-			free_map(map);
+			free_map(map, 1);
 			return (NULL);
 		}
 		if (!map)
@@ -49,7 +50,7 @@ t_point	*parser(char **av)
 		if (fl_num != ft_count_numbers(line))
 		{
 			ft_putstr("Error: Invalid map\n");
-			fdf_error(map, line, fd);
+			fdf_error(map, line, fd, 1);
 		}
 		free(line);
 		line = get_next_line(fd);
@@ -57,7 +58,7 @@ t_point	*parser(char **av)
 	fd = close(fd);
 	if (fd)
 	{
-		free_map(map);
+		free_map(map, 1);
 		return (NULL);
 	}
 	return (map);
@@ -98,8 +99,12 @@ t_point	*create_point(char *line, int y)
 	i = -1;
 	while (split[++i])
 		point->y[i] = ft_atoi(split[i]);
-
 	i = -1;
+	point->color = (int *)malloc(sizeof(int) * (ft_splitlen(split)));
+	if (!point->color)
+		return (NULL);
+	while (split[++i])
+		point->color[i] = ft_atoibase(split[i], "0123456789abcdef");
 	point->next = NULL;
 	free_split(split);
 	return (point);
@@ -128,14 +133,14 @@ void check_err(char *line, t_point *map, int fd)
 	if (!line)
 	{
 		ft_putstr("Error: file is empty\n");
-		fdf_error(map, line, fd);
+		fdf_error(map, line, fd, 1);
 	}
 	error = line_check(line);
 	if (error)
 	{
 		printf("Error: line %d is not valid\n", error);
 		ft_putstr("Error: invalid character\n");
-		fdf_error(map, line, fd);
+		fdf_error(map, line, fd, 1);
 		exit(0);
 	}
 }
@@ -149,7 +154,7 @@ void	check_fd(int fd, char *line, t_point *map)
 	if (fd < 0)
 	{
 		ft_putstr("Error: file not found\n");
-		fdf_error(map, line, fd);
+		fdf_error(map, line, fd, 1);
 	}
 }
 
@@ -211,4 +216,18 @@ int	ft_count_numbers(char *line)
 // Input: char *hex
 // Output: int (the color)
 
+
+
+
+void init_struct(t_point *point)
+{
+    point->x = NULL;
+    point->y = NULL;
+    point->z = NULL;
+    point->color = 0;
+    point->loop = 0;
+    point->iso_x = NULL;
+    point->iso_y = NULL;
+    point->next = NULL;
+}
 
