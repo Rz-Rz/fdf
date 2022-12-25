@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 14:48:54 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 19:48:32 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@
 # define CONFIGUREREQUEST 23
 # define GRAVITYNOTIFY 24
 
-
 /* struct of the MLX img:
 	- img_ptr to store the return value of mlx_new_image
 	- data to store the return value of mlx_get_data_addr
@@ -65,6 +64,15 @@ typedef struct s_data
 	int		endian;
 }				t_data;
 
+typedef struct s_clip
+{
+	int		code1;
+	int		code2;
+	int		accept;
+	int		done;
+	int		code_out;
+}				t_clip;
+
 typedef struct s_point
 {
 	int		*x;
@@ -74,10 +82,10 @@ typedef struct s_point
 	int		loop;
 	int		*iso_x;
 	int		*iso_y;
-	int 	size_x;
-	int 	size_y;
+	int		size_x;
+	int		size_y;
 	int		size_p;
-	struct	s_point	*next;
+	struct s_point	*next;
 }				t_point;
 
 typedef struct pt
@@ -88,6 +96,12 @@ typedef struct pt
 	int		color;
 }				t_pt;
 
+typedef struct line
+{
+	t_pt	*p1;
+	t_pt	*p2;
+}				t_line;
+
 /* struct of the MLX window:
 	- mlx_ptr to store the return value of mlx_init
 	- win_ptr to store the return value of mlx_new_window
@@ -96,9 +110,10 @@ typedef struct pt
 typedef struct s_win
 {
 	void	*mlx_ptr;
+	int		fl_num;
 	int		size;
 	void	*win;
-	t_point *map;
+	t_point	*map;
 	t_data	*img;
 }				t_mlx;
 
@@ -111,13 +126,17 @@ void	get_map_size(t_point *map);
 int		get_pad(t_point *p);
 void	put_pad(t_point *p);
 
+// line_draw_norm.c
+void	pt_map(t_pt *pt, t_point *map, int i);
+void	pm_clip(t_line *line, t_point *map, t_data *img, int i);
+
 // maths.c
 int		get_dy(t_pt *start, t_pt *end);
 int		get_dx(t_pt *start, t_pt *end);
 int		get_slope(t_pt start, t_pt end);
 
 // color.c
-int get_color(t_pt *current, t_pt *start, t_pt *end);
+int		get_color(t_pt *current, t_pt *start, t_pt *end);
 
 // debugging.c
 void	print_map(t_point *map);
@@ -138,11 +157,16 @@ int		**converter(int fd, int **map, char **tmp);
 t_point	*create_point(char *line, int y);
 void	add_point(t_point *map, t_point *point);
 void	check_err(char *line, t_point *map, int fd);
-t_point	*parser(char **av);
+t_point	*parser(char **av, t_mlx *mlx);
 
 // parsing_02
 void	check_fd(int fd, char *line, t_point *map);
-void	init_struct(t_point *point);
+void	map_add(t_point **map, char *line, int y);
+void	fd_done(int fd, t_point *map);
+void	generic_err(t_point *map, char *line, int fd);
+
+// parsing_03
+int		malloc_stuff(t_point *point, char **split, int y);
 
 // utils_01
 void	ft_putstr(char *str);
@@ -162,30 +186,13 @@ int		ft_isalpha(int c);
 int		ft_lstsize(t_point *p);
 int		ft_strlen(char *str);
 int		ft_atoibase(char *str, char *base);
+int		atoibase_plus(char *str);
 
 // line_drawing
 void	convert_iso(t_point *p);
 void	map_to_iso(t_point *map);
 void	draw_line(t_point *map, t_data *img);
-void	center_map(t_point *map);
-
-// octant_2
-int		eighth_octant(t_pt *pt1, t_pt *pt2);
-int		seventh_octant(t_pt *pt1, t_pt *pt2);
-int		sixth_octant(t_pt *pt1, t_pt *pt2);
-
-// octant_1
-int		first_octant(t_pt *pt1, t_pt *pt2);
-int		second_octant(t_pt *pt1, t_pt *pt2);
-int		third_octant(t_pt *pt1, t_pt *pt2);
-int		fourth_octant(t_pt *pt1, t_pt *pt2);
-int		fifth_octant(t_pt *pt1, t_pt *pt2);
-
-// quarter
-int		first_quarter(t_pt *pt1, t_pt *pt2);
-int		second_quarter(t_pt *pt1, t_pt *pt2);
-int		third_quarter(t_pt *pt1, t_pt *pt2);
-int		fourth_quarter(t_pt *pt1, t_pt *pt2);
+void	draw_line_n(t_line *line, t_point *map, t_point *lower, t_data *img);
 
 // breisenham_01
 void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int direction);
@@ -200,9 +207,11 @@ void	brei_sw_norm(t_pt *pt1, t_pt *pt2, t_data *data, int dir);
 void	free_map(t_point *map, int stage);
 int		fdf_exit(t_mlx *mlx);
 
-// lineclip 
+// lineclip.c 
 int		region_code(t_pt *pt);
-void	lineclip(t_pt *pt1, t_pt *pt2, t_data *data);
+void	lineclip(t_line *line, t_data *data);
+void	clip_plus(t_clip clip, t_pt *pt1, t_pt *pt2);
+void	more_clip(t_clip clip, t_pt *pt1, t_pt *pt2, t_pt *tmp);
 
 // error
 int		line_check(char *line);

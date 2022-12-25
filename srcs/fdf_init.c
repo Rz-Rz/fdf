@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 14:01:59 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 17:16:07 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@ int	main(int ac, char **av)
 		ft_putstr("usage: ./fdf <filename>\n");
 		return (0);
 	}
-	map = parser(av);
+	map = parser(av, &mlx);
 	map_to_iso(map);
-	/* print_map(map); */
-	/* print_likemap(map); */
 	mlx.mlx_ptr = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "fdf");
 	mlx.map = map;
-	mlx.img	= &img;
+	mlx.img = &img;
 	img.img = mlx_new_image(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp,
 			&img.size_line, &img.endian);

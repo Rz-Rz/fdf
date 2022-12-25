@@ -6,7 +6,7 @@
 #    By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 14:25:53 by kdhrif            #+#    #+#              #
-#    Updated: 2022/12/24 21:17:11 by kdhrif           ###   ########.fr        #
+#    Updated: 2022/12/25 16:32:55 by kdhrif           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS_DIR = objs
 SRCS	:= $(shell find srcs/*.c -exec basename \ {} \;)
 OBJS     = ${patsubst %.c,${OBJS_DIR}/%.o,${SRCS}}
 CC       = gcc
-CFLAGS   = -g3
+CFLAGS   = -Wall -Wextra -Werror
 LIB      = mlx_linux/libmlx.a mlx_linux/libmlx_Linux.a
 HEADERS  = fdf.h
 
@@ -48,6 +48,6 @@ fclean: clean
 re: fclean all
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) test_maps/42.fdf
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) test_maps/t2.fdf
 
 .PHONY:	all clean fclean re

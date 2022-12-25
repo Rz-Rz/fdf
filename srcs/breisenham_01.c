@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 14:03:32 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 20:01:59 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data)
 
 	dx = pt2->x - pt1->x;
 	dy = pt2->y - pt1->y;
+	dir = 0;
 	if (ft_abs(dy) > ft_abs(dx))
 		brei_sw_norm(pt1, pt2, data, dir);
 	else
@@ -56,17 +57,13 @@ void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data)
 // Return: void
 void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 {
-	int		dx;
-	int		dy;
 	int		error;
 	t_pt	*pt;
-	int cnt;
+	int		cnt;
 
 	pt = malloc(sizeof(t_pt));
-	dx = ft_abs(pt2->x - pt1->x);
-	dy = ft_abs(pt2->y - pt1->y);
-	cnt = dx;
-	error = dy * 2 - dx;
+	cnt = get_dx(pt1, pt2);
+	error = get_dy(pt1, pt2) * 2 - get_dx(pt1, pt2);
 	pt->x = pt1->x;
 	pt->y = pt1->y;
 	pt->color = pt1->color;
@@ -74,15 +71,14 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{
-					// check if you want to advance the Y coordinate
 		if (error >= 0)
 		{
 			pt->y++;
-			error += dy * 2 - dx * 2;
+			error += get_dy(pt1, pt2) * 2 - get_dx(pt1, pt2) * 2;
 		}
-		else // if not, add to the error
-			error += dy * 2;
-		pt->x += dir; // -1 or 1
+		else
+			error += get_dy(pt1, pt2) * 2;
+		pt->x += dir;
 		pt->color = get_color(pt, pt1, pt2);
 		pixel_put(data, pt->x, pt->y, pt->color);
 	}
@@ -98,17 +94,13 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 // Return: void
 void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 {
-	int		dx;
-	int		dy;
 	int		error;
-	t_pt		*pt;
+	t_pt	*pt;
 	int		cnt;
 
 	pt = malloc(sizeof(t_pt));
-	dx = ft_abs(pt2->x - pt1->x);
-	dy = ft_abs(pt2->y - pt1->y);
-	cnt = dy;
-	error = dx * 2 - dy;
+	cnt = get_dy(pt1, pt2);
+	error = get_dx(pt1, pt2) * 2 - get_dy(pt1, pt2);
 	pt->x = pt1->x;
 	pt->y = pt1->y;
 	pt->color = pt1->color;
@@ -119,10 +111,10 @@ void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 		if (error >= 0)
 		{
 			pt->x += dir;
-			error += dx * 2 - dy * 2;
+			error += get_dx(pt1, pt2) * 2 - get_dy(pt1, pt2) * 2;
 		}
 		else
-			error += dx * 2;
+			error += get_dx(pt1, pt2) * 2;
 		pt->y++;
 		pt->color = get_color(pt, pt1, pt2);
 		pixel_put(data, pt->x, pt->y, pt->color);

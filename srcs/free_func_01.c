@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:08:16 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/24 21:15:55 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 19:56:02 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	free_map(t_point *map, int stage)
 
 // Name : fdf_exit
 // Parameter : t_mlx *mlx (the structure that contains all the mlx pointers)
-// Description : this function will free all the mlx pointers and exit the program
+// Description : this function will free
+// all the mlx pointers and exit the program
 // Return : void
 int	fdf_exit(t_mlx *mlx)
 {

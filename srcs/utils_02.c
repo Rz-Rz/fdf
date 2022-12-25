@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 16:56:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 13:42:09 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 17:04:00 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	ft_isalpha(int c)
 		return (1);
 	return (0);
 }
-
 
 // Name: ft_isalphanumeric
 // Description: check if the char is a letter or a digit

@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maths.c                                            :+:      :+:    :+:   */
+/*   line_draw_norm.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/24 21:47:12 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 16:36:25 by kdhrif           ###   ########.fr       */
+/*   Created: 2022/12/25 19:21:55 by kdhrif            #+#    #+#             */
+/*   Updated: 2022/12/25 20:02:58 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	get_dx(t_pt *start, t_pt *end)
+void	pt_map(t_pt *pt, t_point *map, int i)
 {
-	return (abs(end->x - start->x));
+	pt->x = map->iso_x[i];
+	pt->y = map->iso_y[i];
+	pt->color = map->color[i];
 }
 
-int	get_dy(t_pt *start, t_pt *end)
+void	pm_clip(t_line *line, t_point *map, t_data *img, int i)
 {
-	return (abs(end->y - start->y));
+	pt_map(line->p2, map, i);
+	lineclip(line, img);
 }
 
-int	get_slope(t_pt start, t_pt end)
+void	pt_pt(t_pt *pt1, t_pt *pt2)
 {
-	return ((end.y - start.y) / (end.x - start.x));
+	pt1->x = pt2->x;
+	pt1->y = pt2->y;
+	pt1->color = pt2->color;
 }

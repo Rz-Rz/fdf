@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 17:18:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/08 17:24:04 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 17:42:06 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,6 @@ void	free_split(char **split)
 	}
 	free(split);
 }
-
-// Name : ft_realloc
-// Description : realloc the string
-// Input : char *str, int size
-// Output : char *str
-char	*ft_realloc(char *str, int size)
-{
-	char	*new_str;
-	int		i;
-
-	i = 0;
-	if (!(new_str = (char *)malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	while (str[i])
-	{
-		new_str[i] = str[i];
-		i++;
-	}
-	new_str[i] = '\0';
-	free(str);
-	return (new_str);
-}
-
 
 // Name: ft_putstr
 // Parameters: char *str (the string to print)

@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 12:26:56 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 12:54:34 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 19:44:23 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,72 +36,80 @@ int	region_code(t_pt *pt)
 // Description: This function will clip a line if it is outside the window
 // Parameters: t_pt *pt1, t_pt *pt2, t_data *data
 // Return: void
-void	lineclip(t_pt *pt1, t_pt *pt2, t_data *data)
+void	lineclip(t_line *line, t_data *data)
 {
-	int		code1;
-	int		code2;
-	int		accept;
-	int		done;
-	int		x;
-	int		y;
-	int		code_out;
+	t_clip	clip;
+	t_pt	*pt1;
+	t_pt	*pt2;
 
-	accept = 0;
-	done = 0;
-	while (!done)
+
+	pt1 = line->p1;
+	pt2 = line->p2;
+	clip.accept = 0;
+	clip.done = 0;
+	while (!clip.done)
 	{
-		code1 = region_code(pt1);
-		code2 = region_code(pt2);
-		if (code1 == 0 && code2 == 0)
+		clip.code1 = region_code(pt1);
+		clip.code2 = region_code(pt2);
+		if (clip.code1 == 0 && clip.code2 == 0)
 		{
-			accept = 1;
-			done = 1;
+			clip.accept = 1;
+			clip.done = 1;
 		}
-		else if (code1 & code2)
-			done = 1;
+		else if (clip.code1 & clip.code2)
+			clip.done = 1;
 		else
-		{
-			if (code1)
-				code_out = code1;
-			else
-				code_out = code2;
-			if (code_out & 8)
-			{
-				x = pt1->x + (pt2->x - pt1->x) * (WIN_HEIGHT - pt1->y) / (pt2->y - pt1->y);
-				y = WIN_HEIGHT - 2;
-			}
-			else if (code_out & 4)
-			{
-				x = pt1->x + (pt2->x - pt1->x) * (-pt1->y) / (pt2->y - pt1->y);
-				y = 0;
-			}
-			else if (code_out & 2)
-			{
-				y = pt1->y + (pt2->y - pt1->y) * (WIN_WIDTH - pt1->x) / (pt2->x - pt1->x);
-				x = WIN_WIDTH - 2;
-			}
-			else if (code_out & 1)
-			{
-				y = pt1->y + (pt2->y - pt1->y) * (-pt1->x) / (pt2->x - pt1->x);
-				x = 0;
-			}
-			if (code_out == code1)
-			{
-				pt1->x = x;
-				pt1->y = y;
-				code1 = region_code(pt1);
-			}
-			else
-			{
-				pt2->x = x;
-				pt2->y = y;
-				code2 = region_code(pt2);
-			}
-		}
+			clip_plus(clip, pt1, pt2);
 	}
-	if (accept)
+	if (clip.accept)
 		breisenham_switch(pt1, pt2, data);
+}
+
+void	clip_plus(t_clip clip, t_pt *pt1, t_pt *pt2)
+{
+	t_pt	tmp;
+
+	if (clip.code1)
+		clip.code_out = clip.code1;
+	else
+		clip.code_out = clip.code2;
+	more_clip(clip, pt1, pt2, &tmp);
+	if (clip.code_out == clip.code1)
+	{
+		pt1->x = tmp.x;
+		pt1->y = tmp.y;
+		clip.code1 = region_code(pt1);
 	}
+	else
+	{
+		pt2->x = tmp.x;
+		pt2->y = tmp.y;
+		clip.code2 = region_code(pt2);
+	}
+}
 
-
-
+void	more_clip(t_clip clip, t_pt *pt1, t_pt *pt2, t_pt *tmp)
+{
+	if (clip.code_out & 8)
+	{
+		tmp->x = pt1->x + (pt2->x - pt1->x) * (WIN_HEIGHT - pt1->y)
+			/ (pt2->y - pt1->y);
+		tmp->y = WIN_HEIGHT - 2;
+	}
+	else if (clip.code_out & 4)
+	{
+		tmp->x = pt1->x + (pt2->x - pt1->x) * (-pt1->y) / (pt2->y - pt1->y);
+		tmp->y = 0;
+	}
+	else if (clip.code_out & 2)
+	{
+		tmp->y = pt1->y + (pt2->y - pt1->y) * (WIN_WIDTH - pt1->x)
+			/ (pt2->x - pt1->x);
+		tmp->x = WIN_WIDTH - 2;
+	}
+	else if (clip.code_out & 1)
+	{
+		tmp->y = pt1->y + (pt2->y - pt1->y) * (-pt1->x) / (pt2->x - pt1->x);
+		tmp->x = 0;
+	}
+}

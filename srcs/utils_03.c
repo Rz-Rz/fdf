@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:28:26 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 14:20:23 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 17:46:35 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,9 @@ int	ft_atoibase(char *str, char *base)
 	i = 0;
 	nb = 0;
 	sign = 1;
-	while (str[i] && ft_isdigit(str[i]))
-		i++;
-	if (str[i] == ',')
-		i += 3;
-	else 
-		return (0xFFFFFF);
+	i = atoibase_plus(str);
+	if (i == 0xFFFFFF)
+		return (i);
 	while (str[i] && str[i] != ',')
 	{
 		j = 0;
@@ -48,6 +45,24 @@ int	ft_atoibase(char *str, char *base)
 	}
 	return (nb * sign);
 }
+
+int atoibase_plus(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && ft_isdigit(str[i]))
+		i++;
+	if (str[i] == ',')
+		i += 3;
+	else
+		return (0xFFFFFF);
+	return (i);
+}
+
+
+
+
 
 // Name: ft_strlen
 // Parameters: char *str
