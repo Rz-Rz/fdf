@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:28:26 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/24 21:07:45 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 14:20:23 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,22 @@ int	ft_strlen(char *str)
 	i = 0;
 	while (str[i])
 		i++;
+	return (i);
+}
+
+// Name: ft_lstsize
+// Parameters: t_point *p
+// Description: return the number of elements in a chained list
+// Return: int
+int	ft_lstsize(t_point *p)
+{
+	int	i;
+
+	i = 0;
+	while (p)
+	{
+		i++;
+		p = p->next;
+	}
 	return (i);
 }

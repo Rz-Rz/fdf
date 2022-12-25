@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 16:56:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/23 14:53:52 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 13:42:09 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@ void	swap_pt(t_pt *pt1, t_pt *pt2)
 {
 	t_pt	tmp;
 
-	tmp.x = pt1->x;
-	tmp.y = pt1->y;
-	pt1->x = pt2->x;
-	pt1->y = pt2->y;
-	pt2->x = tmp.x;
-	pt2->y = tmp.y;
+	tmp = *pt1;
+	*pt1 = *pt2;
+	*pt2 = tmp;
 }
 
 // Name : abs

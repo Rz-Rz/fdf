@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/24 22:07:41 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 14:03:32 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,18 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	int		dx;
 	int		dy;
 	int		error;
-	t_pt	pt;
-	int		x;
-	int		y;
+	t_pt	*pt;
 	int cnt;
 
+	pt = malloc(sizeof(t_pt));
 	dx = ft_abs(pt2->x - pt1->x);
 	dy = ft_abs(pt2->y - pt1->y);
 	cnt = dx;
 	error = dy * 2 - dx;
-	pt.x = pt1->x;
-	pt.y = pt1->y;
-	pt.color = pt1->color;
-	get_color(pt, pt1, pt2);
+	pt->x = pt1->x;
+	pt->y = pt1->y;
+	pt->color = pt1->color;
+	pt->color = get_color(pt, pt1, pt2);
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{
@@ -84,8 +83,10 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 		else // if not, add to the error
 			error += dy * 2;
 		pt->x += dir; // -1 or 1
+		pt->color = get_color(pt, pt1, pt2);
 		pixel_put(data, pt->x, pt->y, pt->color);
 	}
+	free(pt);
 }
 
 // Name: two_third_octant
@@ -100,30 +101,33 @@ void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	int		dx;
 	int		dy;
 	int		error;
-	int		x;
-	int		y;
-	int cnt;
+	t_pt		*pt;
+	int		cnt;
 
+	pt = malloc(sizeof(t_pt));
 	dx = ft_abs(pt2->x - pt1->x);
 	dy = ft_abs(pt2->y - pt1->y);
 	cnt = dy;
 	error = dx * 2 - dy;
-	x = pt1->x;
-	y = pt1->y;
-	pixel_put(data, x, y, pt1->color);
+	pt->x = pt1->x;
+	pt->y = pt1->y;
+	pt->color = pt1->color;
+	pt->color = get_color(pt, pt1, pt2);
+	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{
-					// check if you want to advance the Y coordinate
 		if (error >= 0)
 		{
-			x += dir;
+			pt->x += dir;
 			error += dx * 2 - dy * 2;
 		}
-		else // if not, add to the error
+		else
 			error += dx * 2;
-		y++;
-		pixel_put(data, x, y, pt1->color);
+		pt->y++;
+		pt->color = get_color(pt, pt1, pt2);
+		pixel_put(data, pt->x, pt->y, pt->color);
 	}
+	free(pt);
 }
 
 // name : direction

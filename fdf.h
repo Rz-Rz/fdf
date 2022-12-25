@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/24 22:07:10 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/25 14:48:54 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ typedef struct s_point
 	int		loop;
 	int		*iso_x;
 	int		*iso_y;
+	int 	size_x;
+	int 	size_y;
+	int		size_p;
 	struct	s_point	*next;
 }				t_point;
 
@@ -93,6 +96,7 @@ typedef struct pt
 typedef struct s_win
 {
 	void	*mlx_ptr;
+	int		size;
 	void	*win;
 	t_point *map;
 	t_data	*img;
@@ -102,13 +106,18 @@ typedef struct s_win
 void	pixel_put(t_data *data, int x, int y, int color);
 /* void	breisenham(int x, int y, int x2, int y2, t_data *img); */
 
+// data.c 
+void	get_map_size(t_point *map);
+int		get_pad(t_point *p);
+void	put_pad(t_point *p);
+
 // maths.c
-int		get_dy(t_pt start, t_pt end);
-int		get_dx(t_pt start, t_pt end);
+int		get_dy(t_pt *start, t_pt *end);
+int		get_dx(t_pt *start, t_pt *end);
 int		get_slope(t_pt start, t_pt end);
 
 // color.c
-int get_color(t_pt current, t_pt start, t_pt end);
+int get_color(t_pt *current, t_pt *start, t_pt *end);
 
 // debugging.c
 void	print_map(t_point *map);
@@ -150,6 +159,7 @@ int		ft_isalphanumeric(int c);
 int		ft_isalpha(int c);
 
 // utils_03 
+int		ft_lstsize(t_point *p);
 int		ft_strlen(char *str);
 int		ft_atoibase(char *str, char *base);
 
