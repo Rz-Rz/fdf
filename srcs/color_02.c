@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   breisenham_02.c                                    :+:      :+:    :+:   */
+/*   color_02.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 15:05:43 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 19:23:52 by kdhrif           ###   ########.fr       */
+/*   Created: 2022/12/26 18:49:16 by kdhrif            #+#    #+#             */
+/*   Updated: 2022/12/26 18:49:23 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-// Name : brei_sw_norm
-// Description : This function will decide which function to
-// use to draw the line
-//
-
-void	brei_sw_norm(t_line *line, t_data *data, int dir)
+int	vanilla_vert_color(t_point *map, t_pt *pt)
 {
-	int	dy;
+	int		color;
+	double	divisor;
+	double	dec_pcnt;
 
-	dy = line->p2->y - line->p1->y;
-	if (dy < 0)
-	{
-		swap_pt(line->p1, line->p2);
-		dir = direction(line->p1, line->p2);
-		two_third_octant(line, data, dir);
-	}
+	divisor = map->max_h - map->min_h;
+	if (divisor != 0)
+		dec_pcnt = (pt->z - map->min_h) / divisor;
 	else
-	{
-		dir = direction(line->p1, line->p2);
-		two_third_octant(line, data, dir);
-	}
+		dec_pcnt = 0.0;
+	color = color_lint(C_MIN, C_MAX, dec_pcnt);
+	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 11:46:40 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 19:24:25 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,29 @@
 // we will swap the coordinates of the line to draw it.
 // Parameters : t_pt *pt1, t_pt *pt2, t_data *data
 // Return : void
-void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data)
+void	breisenham_switch(t_line *line, t_data *data)
 {
 	int	dx;
 	int	dy;
 	int	dir;
 
-	dx = pt2->x - pt1->x;
-	dy = pt2->y - pt1->y;
+	dx = line->p2->x - line->p1->x;
+	dy = line->p2->y - line->p1->y;
 	dir = 0;
 	if (ft_abs(dy) > ft_abs(dx))
-		brei_sw_norm(pt1, pt2, data, dir);
+		brei_sw_norm(line, data, dir);
 	else
 	{
 		if (dx < 0 && dy < 0)
 		{
-			swap_pt(pt1, pt2);
-			dir = direction(pt1, pt2);
-			one_fourth_octant(pt1, pt2, data, dir);
+			swap_pt(line->p1, line->p2);
+			dir = direction(line->p1, line->p2);
+			one_fourth_octant(line, data, dir);
 		}
 		else
 		{
-			dir = direction(pt1, pt2);
-			one_fourth_octant(pt1, pt2, data, dir);
+			dir = direction(line->p1, line->p2);
+			one_fourth_octant(line, data, dir);
 		}
 	}
 }
@@ -55,29 +55,30 @@ void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data)
 // main axis, and y when the error is greater than 0.
 // Parameters: t_pt *pt1, t_pt *pt2, t_data *data
 // Return: void
-void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
+void	one_fourth_octant(t_line *line, t_data *data, int dir)
 {
 	int		error;
 	t_pt	*pt;
 	int		cnt;
 
 	pt = malloc(sizeof(t_pt));
-	cnt = get_dx(pt1, pt2);
-	error = get_dy(pt1, pt2) * 2 - get_dx(pt1, pt2);
-	pt_pt(pt, pt1);
-	pt->color = get_color(pt, pt1, pt2);
+	cnt = get_dx(line->p1, line->p2);
+	error = get_dy(line->p1, line->p2) * 2 - get_dx(line->p1, line->p2);
+	pt_pt(pt, line->p1);
+	pt->color = get_color(pt, line->p1, line->p2);
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{
 		if (error >= 0)
 		{
 			pt->y++;
-			error += get_dy(pt1, pt2) * 2 - get_dx(pt1, pt2) * 2;
+			error += get_dy(line->p1, line->p2) * 2
+				- get_dx(line->p1, line->p2) * 2;
 		}
 		else
-			error += get_dy(pt1, pt2) * 2;
+			error += get_dy(line->p1, line->p2) * 2;
 		pt->x += dir;
-		pt->color = get_color(pt, pt1, pt2);
+		pt->color = get_color(pt, line->p1, line->p2);
 		pixel_put(data, pt->x, pt->y, pt->color);
 	}
 	free(pt);
@@ -90,29 +91,30 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 // main axis, and x when the error is greater than 0.
 // Parameters: t_pt *pt1, t_pt *pt2, t_data *data
 // Return: void
-void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
+void	two_third_octant(t_line *line, t_data *data, int dir)
 {
 	int		error;
 	t_pt	*pt;
 	int		cnt;
 
 	pt = malloc(sizeof(t_pt));
-	cnt = get_dy(pt1, pt2);
-	error = get_dx(pt1, pt2) * 2 - get_dy(pt1, pt2);
-	pt_pt(pt, pt1);
-	pt->color = get_color(pt, pt1, pt2);
+	cnt = get_dy(line->p1, line->p2);
+	error = get_dx(line->p1, line->p2) * 2 - get_dy(line->p1, line->p2);
+	pt_pt(pt, line->p1);
+	pt->color = get_color(pt, line->p1, line->p2);
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{
 		if (error >= 0)
 		{
 			pt->x += dir;
-			error += get_dx(pt1, pt2) * 2 - get_dy(pt1, pt2) * 2;
+			error += get_dx(line->p1, line->p2) * 2
+				- get_dy(line->p1, line->p2) * 2;
 		}
 		else
-			error += get_dx(pt1, pt2) * 2;
+			error += get_dx(line->p1, line->p2) * 2;
 		pt->y++;
-		pt->color = get_color(pt, pt1, pt2);
+		pt->color = get_color(pt, line->p1, line->p2);
 		pixel_put(data, pt->x, pt->y, pt->color);
 	}
 	free(pt);

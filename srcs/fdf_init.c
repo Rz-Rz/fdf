@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 17:16:07 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 19:28:11 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ int	main(int ac, char **av)
 	t_point	*map;
 
 	if (ac != 2)
-	{
-		ft_putstr("usage: ./fdf <filename>\n");
-		return (0);
-	}
-	map = parser(av, &mlx);
+		wr_args();
+	map = parser(av);
+	get_maxmin_z(map);
 	map_to_iso(map);
+	put_vanilla(map, is_vanilla(map));
 	mlx.mlx_ptr = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "fdf");
 	mlx.map = map;

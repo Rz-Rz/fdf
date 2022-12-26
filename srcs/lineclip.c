@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 12:26:56 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 19:44:23 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 19:24:51 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,13 @@ int	region_code(t_pt *pt)
 void	lineclip(t_line *line, t_data *data)
 {
 	t_clip	clip;
-	t_pt	*pt1;
-	t_pt	*pt2;
 
-
-	pt1 = line->p1;
-	pt2 = line->p2;
 	clip.accept = 0;
 	clip.done = 0;
 	while (!clip.done)
 	{
-		clip.code1 = region_code(pt1);
-		clip.code2 = region_code(pt2);
+		clip.code1 = region_code(line->p1);
+		clip.code2 = region_code(line->p2);
 		if (clip.code1 == 0 && clip.code2 == 0)
 		{
 			clip.accept = 1;
@@ -59,10 +54,10 @@ void	lineclip(t_line *line, t_data *data)
 		else if (clip.code1 & clip.code2)
 			clip.done = 1;
 		else
-			clip_plus(clip, pt1, pt2);
+			clip_plus(clip, line->p1, line->p2);
 	}
 	if (clip.accept)
-		breisenham_switch(pt1, pt2, data);
+		breisenham_switch(line, data);
 }
 
 void	clip_plus(t_clip clip, t_pt *pt1, t_pt *pt2)

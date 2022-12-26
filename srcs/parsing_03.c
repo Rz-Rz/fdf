@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 17:28:24 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 17:40:11 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 12:47:50 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	malloc_stuff(t_point *point, char **split, int y)
 	i = -1;
 	while (split[++i])
 		point->y[i] = ft_atoi(split[i]);
-	i = -1;
 	return (1);
 }
 
@@ -83,7 +82,7 @@ int	ft_count_numbers(char *line)
 	{
 		while (line[i] == ' ')
 			i++;
-		if (line[i] != ' ' && line[i] != '\0')
+		if (ft_isdigit(line[i]) && line[i] != '\0')
 			count++;
 		while (line[i] != ' ' && line[i] != '\0')
 			i++;

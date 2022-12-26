@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 14:07:13 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 18:56:47 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 19:15:11 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,40 @@ void	put_pad(t_point *p)
 	{
 		p->size_p = pad;
 		p = p->next;
+	}
+}
+
+void	get_maxmin_z(t_point *map)
+{
+	int		max;
+	int		min;
+	int		i;
+	t_point	*tmp;
+
+	tmp = map;
+	max = 0;
+	min = 0;
+	while (tmp)
+	{
+		i = -1;
+		while (++i <= tmp->loop)
+		{
+			if (tmp->y[i] > max)
+				max = tmp->y[i];
+			if (tmp->y[i] < min)
+				min = tmp->y[i];
+		}
+		tmp = tmp->next;
+	}
+	put_maxmin_z(map, max, min);
+}
+
+void	put_maxmin_z(t_point *map, int max, int min)
+{
+	while (map)
+	{
+		map->min_h = min;
+		map->max_h = max;
+		map = map->next;
 	}
 }

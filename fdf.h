@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 11:44:32 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 19:27:54 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 // Defines the width and height of your window.
 # define WIN_WIDTH 2000
 # define WIN_HEIGHT 1500
+
+# define C_MIN 0x0000FF
+# define C_MAX 0xFFFFFF
 
 // mlx keycode 
 # define KEYPRESS 2
@@ -75,16 +78,19 @@ typedef struct s_clip
 
 typedef struct s_point
 {
-	int		*x;
-	int		*y;
-	int		*z;
-	int		*color;
-	int		loop;
-	int		*iso_x;
-	int		*iso_y;
-	int		size_x;
-	int		size_y;
-	int		size_p;
+	int				*x;
+	int				*y;
+	int				*z;
+	int				*color;
+	int				loop;
+	int				*iso_x;
+	int				*iso_y;
+	int				size_x;
+	int				size_y;
+	int				size_p;
+	int				min_h;
+	int				max_h;
+	int				is_vanilla;
 	struct s_point	*next;
 }				t_point;
 
@@ -119,12 +125,18 @@ typedef struct s_win
 
 // Prototypes
 void	pixel_put(t_data *data, int x, int y, int color);
-/* void	breisenham(int x, int y, int x2, int y2, t_data *img); */
+
+// error.c
+void	wr_args(void);
 
 // data.c 
 void	get_map_size(t_point *map);
 int		get_pad(t_point *p);
 void	put_pad(t_point *p);
+void	get_maxmin_z(t_point *map);
+void	put_maxmin_z(t_point *map, int max, int min);
+int		is_vanilla(t_point *map);
+void	put_vanilla(t_point *map, int vanilla);
 
 // line_draw_norm.c
 void	pt_map(t_pt *pt, t_point *map, int i);
@@ -138,6 +150,8 @@ int		get_slope(t_pt start, t_pt end);
 
 // color.c
 int		get_color(t_pt *current, t_pt *start, t_pt *end);
+int		vanilla_vert_color(t_point *map, t_pt *pt);
+int		color_lint(int c1, int c2, double decimal_percent);
 
 // debugging.c
 void	print_map(t_point *map);
@@ -158,7 +172,7 @@ int		**converter(int fd, int **map, char **tmp);
 t_point	*create_point(char *line, int y);
 void	add_point(t_point *map, t_point *point);
 void	check_err(char *line, t_point *map, int fd);
-t_point	*parser(char **av, t_mlx *mlx);
+t_point	*parser(char **av);
 
 // parsing_02
 void	check_fd(int fd, char *line, t_point *map);
@@ -196,13 +210,13 @@ void	draw_line(t_point *map, t_data *img);
 void	draw_line_n(t_line *line, t_point *map, t_point *lower, t_data *img);
 
 // breisenham_01
-void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int direction);
-void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int direction);
-void	breisenham_switch(t_pt *pt1, t_pt *pt2, t_data *data);
+void	two_third_octant(t_line *line, t_data *data, int dir);
+void	one_fourth_octant(t_line *line, t_data *data, int dir);
+void	breisenham_switch(t_line *line, t_data *data);
 int		direction(t_pt *pt1, t_pt *pt2);
 
 // breisenham_02
-void	brei_sw_norm(t_pt *pt1, t_pt *pt2, t_data *data, int dir);
+void	brei_sw_norm(t_line *line, t_data *data, int dir);
 
 // free_function_01
 void	free_map(t_point *map, int stage);

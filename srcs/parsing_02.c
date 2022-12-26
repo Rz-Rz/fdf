@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 14:34:53 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 17:23:13 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 12:17:45 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	fd_done(int fd, t_point *map)
 	}
 }
 
-void generic_err(t_point *map, char *line, int fd)
+void	generic_err(t_point *map, char *line, int fd)
 {
 	ft_putstr("Error: Invalid map\n");
 	fdf_error(map, line, fd, 1);

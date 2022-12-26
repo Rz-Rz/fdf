@@ -1,36 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   breisenham_02.c                                    :+:      :+:    :+:   */
+/*   data_02.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 15:05:43 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 19:23:52 by kdhrif           ###   ########.fr       */
+/*   Created: 2022/12/26 19:13:31 by kdhrif            #+#    #+#             */
+/*   Updated: 2022/12/26 19:14:48 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-// Name : brei_sw_norm
-// Description : This function will decide which function to
-// use to draw the line
-//
-
-void	brei_sw_norm(t_line *line, t_data *data, int dir)
+int	is_vanilla(t_point *map)
 {
-	int	dy;
+	int		i;
+	t_point	*tmp;
 
-	dy = line->p2->y - line->p1->y;
-	if (dy < 0)
+	tmp = map;
+	while (tmp)
 	{
-		swap_pt(line->p1, line->p2);
-		dir = direction(line->p1, line->p2);
-		two_third_octant(line, data, dir);
+		i = -1;
+		while (++i <= tmp->loop)
+		{
+			if (tmp->color[i] != 0xFFFFFF)
+			{
+				return (0);
+			}
+		}
+		tmp = tmp->next;
 	}
-	else
+	return (1);
+}
+
+void	put_vanilla(t_point *map, int vanilla)
+{
+	t_point	*tmp;
+
+	tmp = map;
+	while (tmp)
 	{
-		dir = direction(line->p1, line->p2);
-		two_third_octant(line, data, dir);
+		tmp->is_vanilla = vanilla;
+		tmp = tmp->next;
 	}
 }

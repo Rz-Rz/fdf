@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:29:42 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 17:41:06 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 19:27:44 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // Return: t_point * (the chained list that contains the map)
 // Description: this function will parse the file and create the chained list
 // that contains the map
-t_point	*parser(char **av, t_mlx *mlx)
+t_point	*parser(char **av)
 {
 	int		fd;
 	char	*line;
@@ -30,14 +30,11 @@ t_point	*parser(char **av, t_mlx *mlx)
 	fd = open(av[1], O_RDONLY);
 	check_fd(fd, line, map);
 	line = get_next_line(fd);
-	mlx->fl_num = ft_count_numbers(line);
 	while (line)
 	{
 		check_err(line, map, fd);
 		y++;
 		map_add(&map, line, y);
-		if (mlx->fl_num != ft_count_numbers(line))
-			generic_err(map, line, fd);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -104,7 +101,6 @@ void	check_err(char *line, t_point *map, int fd)
 	error = line_check(line);
 	if (error)
 	{
-		printf("Error: line %d is not valid\n", error);
 		ft_putstr("Error: invalid character\n");
 		fdf_error(map, line, fd, 1);
 		exit(0);

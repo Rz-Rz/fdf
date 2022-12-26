@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:28:26 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 17:46:35 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 12:02:14 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_atoibase(char *str, char *base)
 	return (nb * sign);
 }
 
-int atoibase_plus(char *str)
+int	atoibase_plus(char *str)
 {
 	int	i;
 
@@ -59,10 +59,6 @@ int atoibase_plus(char *str)
 		return (0xFFFFFF);
 	return (i);
 }
-
-
-
-
 
 // Name: ft_strlen
 // Parameters: char *str
