@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 20:01:59 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 11:46:40 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ void	one_fourth_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	pt = malloc(sizeof(t_pt));
 	cnt = get_dx(pt1, pt2);
 	error = get_dy(pt1, pt2) * 2 - get_dx(pt1, pt2);
-	pt->x = pt1->x;
-	pt->y = pt1->y;
-	pt->color = pt1->color;
+	pt_pt(pt, pt1);
 	pt->color = get_color(pt, pt1, pt2);
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
@@ -101,9 +99,7 @@ void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 	pt = malloc(sizeof(t_pt));
 	cnt = get_dy(pt1, pt2);
 	error = get_dx(pt1, pt2) * 2 - get_dy(pt1, pt2);
-	pt->x = pt1->x;
-	pt->y = pt1->y;
-	pt->color = pt1->color;
+	pt_pt(pt, pt1);
 	pt->color = get_color(pt, pt1, pt2);
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
@@ -128,8 +124,9 @@ void	two_third_octant(t_pt *pt1, t_pt *pt2, t_data *data, int dir)
 // if dx >= 0, we will draw the line from left to right, so direction = 1
 // Parameters : t_pt *pt1, t_pt *pt2
 // Return : int
-int direction(t_pt *pt1, t_pt *pt2) {
-	int dx;
+int	direction(t_pt *pt1, t_pt *pt2)
+{
+	int	dx;
 
 	dx = pt2->x - pt1->x;
 	if (dx < 0)

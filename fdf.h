@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/25 19:48:32 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 11:44:32 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	put_pad(t_point *p);
 // line_draw_norm.c
 void	pt_map(t_pt *pt, t_point *map, int i);
 void	pm_clip(t_line *line, t_point *map, t_data *img, int i);
+void	pt_pt(t_pt *pt1, t_pt *pt2);
 
 // maths.c
 int		get_dy(t_pt *start, t_pt *end);
