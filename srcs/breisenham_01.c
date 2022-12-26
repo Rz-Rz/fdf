@@ -62,6 +62,8 @@ void	one_fourth_octant(t_line *line, t_data *data, int dir)
 	int		cnt;
 
 	pt = malloc(sizeof(t_pt));
+	if (!pt)
+		return;
 	cnt = get_dx(line->p1, line->p2);
 	error = get_dy(line->p1, line->p2) * 2 - get_dx(line->p1, line->p2);
 	pt_pt(pt, line->p1);
@@ -98,6 +100,8 @@ void	two_third_octant(t_line *line, t_data *data, int dir)
 	int		cnt;
 
 	pt = malloc(sizeof(t_pt));
+	if (!pt)
+		return;
 	cnt = get_dy(line->p1, line->p2);
 	error = get_dx(line->p1, line->p2) * 2 - get_dy(line->p1, line->p2);
 	pt_pt(pt, line->p1);

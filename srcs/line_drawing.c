@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 19:15:27 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/26 21:08:40 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ void	draw_line(t_point *map, t_data *img)
 	t_point	*lower;
 
 	line.p1 = malloc(sizeof(t_pt));
+	if (!line.p1)
+		return ;
 	line.p2 = malloc(sizeof(t_pt));
+		return ;
+		fdf_error(map, NULL, 0, 2);
 	while (map)
 	{
 		lower = map->next;
@@ -55,7 +59,11 @@ void	convert_iso(t_point *p)
 	x0 = (((1 - 1) * cos(0.463646)) * p->size_p) + 70;
 	y0 = (((1 + 1 + 1) * sin(0.463646) - 1) * p->size_p) + 200;
 	p->iso_x = (int *)malloc(sizeof(int) * (p->loop + 1));
+	if (!p->iso_x)
+		return ;
 	p->iso_y = (int *)malloc(sizeof(int) * (p->loop + 1));
+	if (!p->iso_x)
+		return ;
 	while (++i <= p->loop)
 	{
 		p->iso_x[i] = ((p->x[i] - p->z[i]) * cos(0.46365) * p->size_p)
