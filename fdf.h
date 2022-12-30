@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 19:27:54 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/30 15:22:10 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void	print_likemap(t_point *map);
 
 // hooks.c
 int		key_hook(int keycode, t_mlx *vars);
+void	all_hooks(t_mlx *mlx);
 
 // ft_split
 int		ft_cntwrds(char const *s, char c);
@@ -182,6 +183,7 @@ void	generic_err(t_point *map, char *line, int fd);
 
 // parsing_03
 int		malloc_stuff(t_point *point, char **split, int y);
+void	group_parsing(t_point *map);
 
 // utils_01
 void	ft_putstr(char *str);

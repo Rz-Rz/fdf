@@ -6,7 +6,7 @@
 #    By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 14:25:53 by kdhrif            #+#    #+#              #
-#    Updated: 2022/12/26 19:19:17 by kdhrif           ###   ########.fr        #
+#    Updated: 2022/12/30 13:09:51 by kdhrif           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS_DIR = objs
 SRCS	:= $(shell find srcs/*.c -exec basename \ {} \;)
 OBJS     = ${patsubst %.c,${OBJS_DIR}/%.o,${SRCS}}
 CC       = gcc
-CFLAGS   = -Wall -Wextra -Werror
+CFLAGS   = -g3 -Wall -Wextra -Werror
 LIB      = mlx_linux/libmlx.a mlx_linux/libmlx_Linux.a
 HEADERS  = fdf.h
 

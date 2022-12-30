@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 14:07:13 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 19:15:11 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/30 13:16:11 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	get_pad(t_point *p)
 	int	hypothenuse;
 	int	min;
 
+	if (p == NULL)
+		return (0);
 	hypothenuse = sqrt(pow(p->size_x, 2) + pow(p->size_y, 2));
 	min = WIN_HEIGHT;
 	if (WIN_WIDTH < min)
@@ -31,6 +33,8 @@ void	get_map_size(t_point *map)
 	int		i;
 
 	i = 0;
+	if (map == NULL)
+		return ;
 	root = map;
 	while (i <= map->loop)
 		i++;
