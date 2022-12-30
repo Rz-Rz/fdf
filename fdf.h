@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 16:14:07 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/30 15:22:10 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/30 18:00:12 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	put_vanilla(t_point *map, int vanilla);
 // line_draw_norm.c
 void	pt_map(t_pt *pt, t_point *map, int i);
 void	pm_clip(t_line *line, t_point *map, t_data *img, int i);
+void	mlines(t_line *line);
 void	pt_pt(t_pt *pt1, t_pt *pt2);
 
 // maths.c
@@ -219,6 +220,8 @@ int		direction(t_pt *pt1, t_pt *pt2);
 
 // breisenham_02
 void	brei_sw_norm(t_line *line, t_data *data, int dir);
+void	set_br(int *cnt, int *error, t_line *line, t_pt *pt);
+void	set_br2(int *cnt, int *error, t_line *line, t_pt *pt);
 
 // free_function_01
 void	free_map(t_point *map, int stage);

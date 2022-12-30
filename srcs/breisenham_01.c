@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:44:40 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 19:24:25 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/30 18:01:55 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,8 @@ void	one_fourth_octant(t_line *line, t_data *data, int dir)
 
 	pt = malloc(sizeof(t_pt));
 	if (!pt)
-		return;
-	cnt = get_dx(line->p1, line->p2);
-	error = get_dy(line->p1, line->p2) * 2 - get_dx(line->p1, line->p2);
-	pt_pt(pt, line->p1);
-	pt->color = get_color(pt, line->p1, line->p2);
+		return ;
+	set_br2(&cnt, &error, line, pt);
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{
@@ -101,11 +98,8 @@ void	two_third_octant(t_line *line, t_data *data, int dir)
 
 	pt = malloc(sizeof(t_pt));
 	if (!pt)
-		return;
-	cnt = get_dy(line->p1, line->p2);
-	error = get_dx(line->p1, line->p2) * 2 - get_dy(line->p1, line->p2);
-	pt_pt(pt, line->p1);
-	pt->color = get_color(pt, line->p1, line->p2);
+		return ;
+	set_br(&cnt, &error, line, pt);
 	pixel_put(data, pt->x, pt->y, pt->color);
 	while (cnt--)
 	{

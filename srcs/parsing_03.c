@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 17:28:24 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/30 14:51:10 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/30 17:53:09 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_count_numbers(char *line)
 	return (count);
 }
 
-void group_parsing(t_point *map)
+void	group_parsing(t_point *map)
 {
 	get_maxmin_z(map);
 	map_to_iso(map);

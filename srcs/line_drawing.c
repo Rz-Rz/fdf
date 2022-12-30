@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:14:21 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/30 13:07:10 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/30 17:52:18 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,7 @@ void	draw_line(t_point *map, t_data *img)
 	t_line	line;
 	t_point	*lower;
 
-	line.p1 = malloc(sizeof(t_pt));
-	if (!line.p1)
-		return ;
-	line.p2 = malloc(sizeof(t_pt));
-	if (!line.p2)
-		return ;
+	mlines(&line);
 	while (map)
 	{
 		lower = map->next;

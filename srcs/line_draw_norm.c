@@ -6,7 +6,7 @@
 /*   By: kdhrif <kdhrif@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 19:21:55 by kdhrif            #+#    #+#             */
-/*   Updated: 2022/12/26 19:25:28 by kdhrif           ###   ########.fr       */
+/*   Updated: 2022/12/30 17:51:06 by kdhrif           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ void	pt_pt(t_pt *pt1, t_pt *pt2)
 	pt1->y = pt2->y;
 	pt1->z = pt2->z;
 	pt1->color = pt2->color;
+}
+
+void	mlines(t_line *line)
+{
+	line->p1 = malloc(sizeof(t_pt));
+	if (!line->p1)
+		return ;
+	line->p2 = malloc(sizeof(t_pt));
+	if (!line->p2)
+		return ;
 }
